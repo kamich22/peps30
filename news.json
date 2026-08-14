@@ -1,17 +1,10 @@
 [
   {
-    "date": "2026-08-12",
-    "categorie": "Partenariats",
-    "titre": "test",
-    "texte": "testesteste",
-    "image": "assets/untitled-project.jpg",
-    "lien": ""
-  },
-  {
     "date": "2026-05-18",
     "categorie": "Association",
     "titre": "Assemblée générale annuelle",
     "texte": "Retour sur le bilan 2025, présentation des comptes et des orientations pour l'année à venir. Ouverte à tous les adhérents.",
+    "contenu": "",
     "image": "",
     "lien": ""
   },
@@ -20,6 +13,7 @@
     "categorie": "Partenariats",
     "titre": "Nouvelle convention avec une MECS du Gard",
     "texte": "Un partenariat qui renforce l'accompagnement des jeunes sur le territoire et élargit notre capacité d'accueil sur les temps de vacances.",
+    "contenu": "",
     "image": "",
     "lien": ""
   }
