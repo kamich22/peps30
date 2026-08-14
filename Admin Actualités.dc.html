@@ -374,6 +374,9 @@ class Component extends DCLogic {
       body: JSON.stringify(body),
     });
     if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        throw new Error('Le token n\'a pas le droit d\'écrire dans ' + this.ghRepo() + '. Dans ses réglages sur GitHub : « Repository access » sur « Only select repositories » → ' + this.ghRepo() + ', puis « Repository permissions → Contents : Read and write ».');
+      }
       const detail = await res.text();
       throw new Error('Envoi de ' + path + ' refusé (' + res.status + ') — ' + detail.slice(0, 160));
     }
