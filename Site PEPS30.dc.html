@@ -447,7 +447,7 @@
 
     <section style="max-width: 1180px; margin: 0 auto; padding: 0 28px 96px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 26px;">
       <sc-for list="{{ news }}" as="item" hint-placeholder-count="3">
-        <article style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.09); border-radius: 26px; overflow: hidden; box-shadow: 0 8px 26px rgba(18,58,92,0.07); display: flex; flex-direction: column;">
+        <article onClick="{{ item.onOpen }}" style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.09); border-radius: 26px; overflow: hidden; box-shadow: 0 8px 26px rgba(18,58,92,0.07); display: flex; flex-direction: column; cursor: pointer; transition: box-shadow .2s ease, border-color .2s ease;" style-hover="border-color: rgba(27,117,187,0.38); box-shadow: 0 14px 34px rgba(18,58,92,0.13);">
           <sc-if value="{{ item.image }}" hint-placeholder-val="{{ false }}">
             <div style="height: 200px; background: #DCEAF5;">
               <image-slot shape="rect" src="{{ item.image }}" placeholder="Photo de l'actualité"></image-slot>
@@ -459,14 +459,38 @@
               <span style="font-size: 13.5px; font-weight: 600; color: #7C93A5;">{{ item.dateLisible }}</span>
             </div>
             <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25; letter-spacing: -0.02em; color: #123A5C; margin: 0;">{{ item.titre }}</h2>
-            <p style="font-size: 15.5px; line-height: 1.7; color: #456277; margin: 0; flex: 1;">{{ item.texte }}</p>
-            <sc-if value="{{ item.lien }}" hint-placeholder-val="{{ false }}">
-              <a href="{{ item.lien }}" target="_blank" rel="noopener" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 700; color: #1B75BB; text-decoration: none;" style-hover="color: #145F98; text-decoration: underline;">En savoir plus →</a>
-            </sc-if>
+            <p style="font-size: 15.5px; line-height: 1.7; color: #456277; margin: 0; flex: 1;">{{ item.resume }}</p>
+            <span style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 700; color: #1B75BB;">Lire la suite →</span>
           </div>
         </article>
       </sc-for>
     </section>
+
+    <sc-if value="{{ hasOpenNews }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeNews }}" style="position: fixed; inset: 0; z-index: 80; background: rgba(10,32,52,0.58); display: flex; align-items: flex-start; justify-content: center; padding: 5vh 20px; overflow-y: auto; animation: pepsFade .25s ease both;">
+      <div onClick="{{ keepOpen }}" style="background: #FFFFFF; border-radius: 30px; width: 100%; max-width: 720px; overflow: hidden; box-shadow: 0 24px 70px rgba(10,32,52,0.4);">
+        <sc-if value="{{ openNews.image }}" hint-placeholder-val="{{ false }}">
+          <div style="height: 300px; background: #DCEAF5;">
+            <image-slot shape="rect" src="{{ openNews.image }}" placeholder="Photo de l'actualité"></image-slot>
+          </div>
+        </sc-if>
+        <div style="padding: 32px 36px 36px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span style="font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #123A5C; background: #FDB913; padding: 5px 11px; border-radius: 999px;">{{ openNews.categorie }}</span>
+            <span style="font-size: 13.5px; font-weight: 600; color: #7C93A5;">{{ openNews.dateLisible }}</span>
+          </div>
+          <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(26px, 3.4vw, 34px); line-height: 1.18; letter-spacing: -0.025em; color: #123A5C; margin: 0;">{{ openNews.titre }}</h2>
+          <sc-for list="{{ openNewsParagraphes }}" as="par" hint-placeholder-count="3">
+            <p style="font-size: 16.5px; line-height: 1.75; color: #456277; margin: 0; text-wrap: pretty;">{{ par }}</p>
+          </sc-for>
+          <sc-if value="{{ openNews.lien }}" hint-placeholder-val="{{ false }}">
+            <a href="{{ openNews.lien }}" target="_blank" rel="noopener" style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 700; color: #1B75BB; text-decoration: none;" style-hover="color: #145F98; text-decoration: underline;">En savoir plus →</a>
+          </sc-if>
+          <button onClick="{{ closeNews }}" style="align-self: flex-start; margin-top: 8px; font-family: Nunito, sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; background: #123A5C; border: 0; padding: 13px 26px; border-radius: 999px; cursor: pointer;" style-hover="background: #1B75BB;">Fermer</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
   </main>
   </sc-if>
 
@@ -535,7 +559,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;showStats&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;},&quot;showQuote&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'accueil', news: [] };
+  state = { page: 'accueil', news: [], openNews: -1 };
 
   fallbackNews = [
     { date: '2026-07-02', categorie: 'Séjours', titre: "Séjour d'été 2026 : les inscriptions sont ouvertes", texte: "Deux séjours en pleine nature dans les Cévennes, en juillet et en août. Places limitées, priorité aux familles accompagnées par l'association.", image: '', lien: '' },
@@ -558,17 +582,32 @@ class Component extends DCLogic {
       .map((it) => {
         const p = String(it.date || '').split('-');
         const lisible = p.length === 3 ? `${Number(p[2])} ${mois[Number(p[1]) - 1]} ${p[0]}` : (it.date || '');
-        return Object.assign({}, it, { dateLisible: lisible, categorie: it.categorie || 'Actualité' });
+        const resume = String(it.texte || '');
+        const complet = String(it.contenu || '').trim() || resume;
+        return Object.assign({}, it, {
+          dateLisible: lisible,
+          categorie: it.categorie || 'Actualité',
+          resume: this.court(resume),
+          paragraphes: complet.split(/\n+/).map((s) => s.trim()).filter(Boolean),
+        });
       });
   }
 
+  court(texte) {
+    const t = String(texte || '').trim();
+    if (t.length <= 170) return t;
+    return t.slice(0, 170).replace(/\s+\S*$/, '') + '…';
+  }
+
   go(page) {
-    this.setState({ page });
+    this.setState({ page, openNews: -1 });
     if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
   renderVals() {
     const p = this.state.page;
+    const actus = this.formatNews(this.state.news.length ? this.state.news : this.fallbackNews);
+    const ouverte = this.state.openNews >= 0 && this.state.openNews < actus.length ? actus[this.state.openNews] : null;
     return {
       isAccueil: p === 'accueil',
       isPresentation: p === 'presentation',
@@ -578,7 +617,12 @@ class Component extends DCLogic {
       isContact: p === 'contact',
       isNews: p === 'news',
       goNews: () => this.go('news'),
-      news: this.formatNews(this.state.news.length ? this.state.news : this.fallbackNews),
+      news: actus.map((it, i) => Object.assign({}, it, { onOpen: () => this.setState({ openNews: i }) })),
+      hasOpenNews: !!ouverte,
+      openNews: ouverte || { titre: '', categorie: '', dateLisible: '', image: '', lien: '' },
+      openNewsParagraphes: ouverte ? ouverte.paragraphes : [],
+      closeNews: () => this.setState({ openNews: -1 }),
+      keepOpen: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
       goAccueil: () => this.go('accueil'),
       goPresentation: () => this.go('presentation'),
       goHistorique: () => this.go('historique'),

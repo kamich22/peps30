@@ -57,8 +57,15 @@
         </div>
 
         <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">
-          Texte
-          <textarea value="{{ draft.texte }}" onChange="{{ onTexte }}" rows="5" placeholder="Deux ou trois phrases." style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 400; line-height: 1.6; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 11px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none; resize: vertical;" style-focus="border-color: var(--accent);"></textarea>
+          Résumé <span style="font-weight: 600; text-transform: none; letter-spacing: normal; color: #9AAEBC;">affiché sur la carte</span>
+          <textarea value="{{ draft.texte }}" onChange="{{ onTexte }}" rows="3" placeholder="Une ou deux phrases qui donnent envie de cliquer." style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 400; line-height: 1.6; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 11px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none; resize: vertical;" style-focus="border-color: var(--accent);"></textarea>
+          <span style="font-size: 12.5px; font-weight: 600; text-transform: none; letter-spacing: normal; color: #9AAEBC;">{{ resumeCount }}</span>
+        </label>
+
+        <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">
+          Article complet <span style="font-weight: 600; text-transform: none; letter-spacing: normal; color: #9AAEBC;">affiché au clic</span>
+          <textarea value="{{ draft.contenu }}" onChange="{{ onContenu }}" rows="9" placeholder="Le texte entier de l'actualité.&#10;&#10;Laissez une ligne vide pour séparer les paragraphes." style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 400; line-height: 1.6; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 11px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none; resize: vertical;" style-focus="border-color: var(--accent);"></textarea>
+          <span style="font-size: 12.5px; font-weight: 600; text-transform: none; letter-spacing: normal; color: #9AAEBC;">Si vous le laissez vide, le clic affichera simplement le résumé.</span>
         </label>
 
         <div style="display: flex; flex-direction: column; gap: 9px;">
@@ -198,7 +205,7 @@
 
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1B75BB&quot;,&quot;options&quot;:[&quot;#1B75BB&quot;,&quot;#123A5C&quot;,&quot;#2E8B6F&quot;,&quot;#C2453C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apparence&quot;},&quot;listStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Cartes détaillées&quot;,&quot;options&quot;:[&quot;Cartes détaillées&quot;,&quot;Liste compacte&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apparence&quot;},&quot;categories&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Séjours, Association, Partenariats, Animations&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contenu&quot;}}">
-const EMPTY = { titre: '', date: '', categorie: 'Séjours', texte: '', image: '', lien: '' };
+const EMPTY = { titre: '', date: '', categorie: 'Séjours', texte: '', contenu: '', image: '', lien: '' };
 const KEY = 'peps30-news';
 const GH_KEY = 'peps30-github';
 const GH_EMPTY = { repo: '', branch: 'main', token: '' };
@@ -307,7 +314,7 @@ class Component extends DCLogic {
   newsText() {
     const data = this.sorted(this.state.items).map((it) => ({
       date: it.date || '', categorie: it.categorie || '', titre: it.titre || '',
-      texte: it.texte || '', image: it.image || '', lien: it.lien || '',
+      texte: it.texte || '', contenu: it.contenu || '', image: it.image || '', lien: it.lien || '',
     }));
     return JSON.stringify(data, null, 2) + '\n';
   }
@@ -503,6 +510,10 @@ class Component extends DCLogic {
       onDate: this.field('date'),
       onCategorie: this.field('categorie'),
       onTexte: this.field('texte'),
+      onContenu: this.field('contenu'),
+      resumeCount: String(this.state.draft.texte || '').trim().length > 170
+        ? 'Au-delà de 170 caractères, la carte coupera le résumé — le texte entier reste visible au clic.'
+        : String(this.state.draft.texte || '').trim().length + ' / 170 caractères',
       onImage: this.field('image'),
       onLien: this.field('lien'),
       save: this.save,
