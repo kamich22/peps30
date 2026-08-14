@@ -544,7 +544,7 @@ class Component extends DCLogic {
   ];
 
   componentDidMount() {
-    fetch('news.json')
+    fetch('news.json?t=' + Date.now(), { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d) => { if (Array.isArray(d) && d.length) this.setState({ news: d }); else this.setState({ news: this.fallbackNews }); })
       .catch(() => this.setState({ news: this.fallbackNews }));

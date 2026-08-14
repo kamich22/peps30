@@ -175,6 +175,7 @@
 
         <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
           <button onClick="{{ publish }}" style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; background: var(--accent); border: 0; padding: 12px 22px; border-radius: 999px; cursor: pointer;" style-hover="filter: brightness(0.86);">{{ publishLabel }}</button>
+          <button onClick="{{ testConnection }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 700; color: #456277; background: rgba(18,58,92,0.07); border: 0; padding: 12px 18px; border-radius: 999px; cursor: pointer;" style-hover="background: rgba(18,58,92,0.13);">Tester la connexion</button>
           <sc-if value="{{ pendingLabel }}" hint-placeholder-val="{{ false }}">
             <span style="font-size: 13.5px; font-weight: 600; color: #7C93A5;">{{ pendingLabel }}</span>
           </sc-if>
@@ -251,7 +252,7 @@ class Component extends DCLogic {
   }
 
   loadFile = () => {
-    fetch('news.json')
+    fetch('news.json?t=' + Date.now(), { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d) => { if (Array.isArray(d)) this.setState({ items: d, error: '' }); })
       .catch(() => this.setState({ error: "news.json introuvable — la liste démarre vide." }));
@@ -395,6 +396,43 @@ class Component extends DCLogic {
     if (!res.ok) throw this.ghError(res.status, await res.text());
   }
 
+  testConnection = async () => {
+    if (this.state.publishing) return;
+    if (!this.ghRepo() || !String(this.state.gh.token || '').trim()) {
+      this.setState({ publishOk: false, publishMsg: 'Renseignez le dépôt et le token avant de tester.' });
+      return;
+    }
+    this.setState({ publishing: true, publishOk: false, publishMsg: 'Vérification…' });
+    try {
+      const res = await fetch('https://api.github.com/repos/' + this.ghRepo(), { headers: this.ghHeaders() });
+      if (!res.ok) throw this.ghError(res.status, await res.text());
+      const repo = await res.json();
+      const canWrite = !!(repo.permissions && repo.permissions.push);
+      const branch = String(this.state.gh.branch || '').trim() || 'main';
+      if (!canWrite) {
+        this.setState({
+          publishing: false, publishOk: false,
+          publishMsg: 'Le token voit bien ' + repo.full_name + ', mais en lecture seule. Il lui manque le droit d\'écriture : token fine-grained → « Repository permissions → Contents : Read and write » puis Update token ; token classique (ghp_) → case « repo » cochée.',
+        });
+        return;
+      }
+      const br = await fetch('https://api.github.com/repos/' + this.ghRepo() + '/branches/' + encodeURIComponent(branch), { headers: this.ghHeaders() });
+      if (!br.ok) {
+        this.setState({
+          publishing: false, publishOk: false,
+          publishMsg: 'Token OK en écriture sur ' + repo.full_name + ', mais la branche « ' + branch + ' » n\'existe pas. La branche par défaut du dépôt est « ' + repo.default_branch + ' ».',
+        });
+        return;
+      }
+      this.setState({
+        publishing: false, publishOk: true,
+        publishMsg: 'Connexion OK : le token peut écrire dans ' + repo.full_name + ' sur la branche « ' + branch + ' ». Vous pouvez publier.',
+      });
+    } catch (e) {
+      this.setState({ publishing: false, publishOk: false, publishMsg: (e && e.message) ? e.message : String(e) });
+    }
+  };
+
   publish = async () => {
     if (this.state.publishing) return;
     if (!this.ghRepo() || !String(this.state.gh.token || '').trim()) {
@@ -476,7 +514,8 @@ class Component extends DCLogic {
       onGhBranch: this.ghField('branch'),
       onGhToken: this.ghField('token'),
       publish: this.publish,
-      publishLabel: this.state.publishing ? 'Publication…' : 'Publier sur GitHub',
+      testConnection: this.testConnection,
+      publishLabel: this.state.publishing ? 'En cours…' : 'Publier sur GitHub',
       publishMsg: this.state.publishMsg,
       publishDone: !!this.state.publishMsg && this.state.publishOk,
       publishError: !!this.state.publishMsg && !this.state.publishOk,
