@@ -1,16 +1,704 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>PEPS30 - Redirection</title>
-  <meta http-equiv="refresh" content="0;url=Site%20PEPS30.dc.html">
-  <script>
-    // fallback pour navigateurs qui n'utilisent pas meta refresh
-    try { location.replace('Site%20PEPS30.dc.html'); } catch(e) {}
-  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PEPS 30 — Association d'accompagnement des enfants et des familles, Alès</title>
+<meta name="description" content="L'association PEPS 30 accompagne à Alès et dans le Gard les enfants et adolescents en difficulté sociale, familiale, scolaire ou en situation de handicap, et soutient leurs parents, les institutions et l'Aide Sociale à l'Enfance.">
+<link rel="icon" href="assets/logo-peps-officiel.png">
+<script src="./support.js"></script>
 </head>
 <body>
-  <p>Redirection en cours... Si rien ne se passe, <a href="Site%20PEPS30.dc.html">cliquez ici</a>.</p>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&amp;family=Nunito:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #F1F7FC; font-family: Nunito, system-ui, sans-serif; color: #123A5C; -webkit-font-smoothing: antialiased; }
+  a { color: #1B75BB; text-decoration: none; }
+  a:hover { color: #E62129; }
+  @keyframes pepsSlide { 0% { opacity: 0; } 3% { opacity: 1; } 22% { opacity: 1; } 25% { opacity: 0; } 100% { opacity: 0; } }
+  @keyframes pepsFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail" data-bg-color="#F2F8FD">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+    <rect width="100" height="100" fill="#F2F8FD"></rect>
+    <circle cx="38" cy="38" r="9" fill="#1B75BB"></circle>
+    <circle cx="62" cy="34" r="7" fill="#FDB913"></circle>
+    <circle cx="66" cy="56" r="6" fill="#E62129"></circle>
+    <circle cx="34" cy="58" r="7" fill="#39A935"></circle>
+    <rect x="47" y="44" width="6" height="26" rx="3" fill="#39A935"></rect>
+  </svg>
+</template>
+
+<div style="min-height: 100vh; background: #F2F8FD; font-family: Nunito, system-ui, sans-serif; color: #123A5C;">
+
+  <header style="position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(18,58,92,0.08);">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+      <div onClick="{{ goAccueil }}" style="display: flex; align-items: center; gap: 12px; cursor: pointer; flex-shrink: 0;">
+        <img src="assets/logo-peps-officiel.png" alt="Logo PEPS 30" style="width: 52px; height: 52px; object-fit: contain;">
+        <div style="display: flex; flex-direction: column; line-height: 1.15;">
+          <span style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 19px; letter-spacing: -0.01em;">Association PEPS 30</span>
+          <span style="font-size: 12.5px; color: #6B8496; font-weight: 500;">Soufflez, on vous accompagne</span>
+        </div>
+      </div>
+
+      <nav style="margin-left: auto; display: flex; align-items: center; flex-wrap: wrap; gap: 2px 4px; justify-content: flex-end;">
+        <button onClick="{{ goAccueil }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 600; color: #123A5C; background: none; border: 0; padding: 9px 14px; border-radius: 10px; cursor: pointer; position: relative;" style-hover="background: rgba(27,117,187,0.08); color: #1B75BB;">
+          Accueil
+          <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2.5px; border-radius: 2px; background: #1B75BB;"></span></sc-if>
+        </button>
+        <button onClick="{{ goPresentation }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 600; color: #123A5C; background: none; border: 0; padding: 9px 14px; border-radius: 10px; cursor: pointer; position: relative;" style-hover="background: rgba(27,117,187,0.08); color: #1B75BB;">
+          Présentation
+          <sc-if value="{{ isPresentation }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2.5px; border-radius: 2px; background: #1B75BB;"></span></sc-if>
+        </button>
+        <button onClick="{{ goHistorique }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 600; color: #123A5C; background: none; border: 0; padding: 9px 14px; border-radius: 10px; cursor: pointer; position: relative;" style-hover="background: rgba(27,117,187,0.08); color: #1B75BB;">
+          Historique
+          <sc-if value="{{ isHistorique }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2.5px; border-radius: 2px; background: #1B75BB;"></span></sc-if>
+        </button>
+        <button onClick="{{ goSejours }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 600; color: #123A5C; background: none; border: 0; padding: 9px 14px; border-radius: 10px; cursor: pointer; position: relative;" style-hover="background: rgba(27,117,187,0.08); color: #1B75BB;">
+          Animations / Séjours
+          <sc-if value="{{ isSejours }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2.5px; border-radius: 2px; background: #1B75BB;"></span></sc-if>
+        </button>
+        <button onClick="{{ goPartenaires }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 600; color: #123A5C; background: none; border: 0; padding: 9px 14px; border-radius: 10px; cursor: pointer; position: relative;" style-hover="background: rgba(27,117,187,0.08); color: #1B75BB;">
+          Partenaires
+          <sc-if value="{{ isPartenaires }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2.5px; border-radius: 2px; background: #1B75BB;"></span></sc-if>
+        </button>
+        <button onClick="{{ goNews }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 600; color: #123A5C; background: none; border: 0; padding: 9px 14px; border-radius: 10px; cursor: pointer; position: relative;" style-hover="background: rgba(27,117,187,0.08); color: #1B75BB;">
+          Actualités
+          <sc-if value="{{ isNews }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2.5px; border-radius: 2px; background: #1B75BB;"></span></sc-if>
+        </button>
+        <button onClick="{{ goContact }}" style="margin-left: 8px; font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 700; color: #FFFFFF; background: #1B75BB; border: 0; padding: 11px 20px; border-radius: 999px; cursor: pointer;" style-hover="background: #145F98;">Contact</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ACCUEIL -->
+  <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: pepsFade .45s ease both;">
+    <section style="max-width: 1180px; margin: 0 auto; padding: 84px 28px 64px; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 48px; align-items: center;">
+      <div>
+        <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #6B8496; margin: 0 0 22px;">Association loi 1901 · Alès, Gard</p>
+        <h1 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(38px, 5vw, 62px); line-height: 1.12; letter-spacing: -0.03em; margin: 0 0 22px;">Au service de l'humain,<br>aux côtés des familles <span style="color: #1B75BB;">extraordinaires</span>.</h1>
+        <p style="font-size: 19px; line-height: 1.65; color: #456277; margin: 0 0 34px; max-width: 560px; text-wrap: pretty;">PEPS accompagne les enfants et les adolescents en difficulté sociale, familiale, scolaire ou en situation de handicap — et soutient leurs parents, les institutions et l'Aide Sociale à l'Enfance.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button onClick="{{ goPresentation }}" style="font-family: Nunito, sans-serif; font-size: 15.5px; font-weight: 700; color: #FFFFFF; background: #123A5C; border: 0; padding: 15px 26px; border-radius: 999px; cursor: pointer;" style-hover="background: #1B75BB;">Découvrir l'association</button>
+          <button onClick="{{ goSejours }}" style="font-family: Nunito, sans-serif; font-size: 15.5px; font-weight: 700; color: #123A5C; background: none; border: 1.5px solid rgba(18,58,92,0.18); padding: 15px 26px; border-radius: 999px; cursor: pointer;" style-hover="border-color: #123A5C; background: rgba(18,58,92,0.04);">Nos séjours 9–17 ans</button>
+        </div>
+      </div>
+      <div style="position: relative; display: flex; justify-content: center; align-items: center;">
+        <img src="assets/logo-peps-officiel.png" alt="Logo de l'association PEPS 30" style="position: relative; width: 100%; max-width: 320px; aspect-ratio: 1; object-fit: contain;">
+      </div>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 24px 28px 72px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px;">
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 28px 24px 30px;">
+          <span style="display: block; width: 46px; height: 46px; border-radius: 50%; background: #1B75BB; margin-bottom: 20px;"></span>
+          <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 21px; margin: 0 0 10px;">Prévention</h3>
+          <p style="font-size: 14.5px; line-height: 1.6; color: #587287; margin: 0;">Tables rondes et ateliers en écoles, MECS, ITEP : écrans, harcèlement, addictions, mal-être.</p>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 28px 24px 30px;">
+          <span style="display: block; width: 46px; height: 46px; border-radius: 50%; background: #FDB913; margin-bottom: 20px;"></span>
+          <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 21px; margin: 0 0 10px;">Éducation</h3>
+          <p style="font-size: 14.5px; line-height: 1.6; color: #587287; margin: 0;">Accompagnement éducatif individualisé, à domicile ou avec hébergement, autour du projet de l'enfant.</p>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 28px 24px 30px;">
+          <span style="display: block; width: 46px; height: 46px; border-radius: 50%; background: #39A935; margin-bottom: 20px;"></span>
+          <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 21px; margin: 0 0 10px;">Parentalité</h3>
+          <p style="font-size: 14.5px; line-height: 1.6; color: #587287; margin: 0;">Soutien aux parents en difficulté avec leur enfant, travail du lien, temps de répit pour la famille.</p>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 28px 24px 30px;">
+          <span style="display: block; width: 46px; height: 46px; border-radius: 50%; background: #E62129; margin-bottom: 20px;"></span>
+          <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 21px; margin: 0 0 10px;">Sophrologie</h3>
+          <p style="font-size: 14.5px; line-height: 1.6; color: #587287; margin: 0;">Bien-être et développement personnel : sophrologie et hypnose, en individuel ou en collectivité.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 0 28px 80px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+        <div style="border-radius: 28px; overflow: hidden; height: 300px; box-shadow: 0 8px 26px rgba(18,58,92,0.1);">
+          <image-slot id="accueil-photo-1" shape="rect" src="https://images.pexels.com/photos/8538330/pexels-photo-8538330.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" placeholder="Photo — accompagnement éducatif"></image-slot>
+        </div>
+        <div style="border-radius: 28px; overflow: hidden; height: 300px; box-shadow: 0 8px 26px rgba(18,58,92,0.1);">
+          <image-slot id="accueil-photo-2" shape="rect" src="https://images.pexels.com/photos/29214469/pexels-photo-29214469.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" placeholder="Photo — séjour ou activité"></image-slot>
+        </div>
+        <div style="border-radius: 28px; overflow: hidden; height: 300px; box-shadow: 0 8px 26px rgba(18,58,92,0.1);">
+          <image-slot id="accueil-photo-3" shape="rect" src="https://images.pexels.com/photos/8535146/pexels-photo-8535146.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" placeholder="Photo — atelier de prévention"></image-slot>
+        </div>
+      </div>
+    </section>
+
+    <sc-if value="{{ showStats }}" hint-placeholder-val="{{ true }}">
+    <section style="background: radial-gradient(rgba(255,255,255,0.09) 1.6px, transparent 1.7px) 0 0 / 26px 26px, #123A5C; color: #FFFFFF;">
+      <div style="max-width: 1180px; margin: 0 auto; padding: 72px 28px;">
+        <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #9EC2E0; margin: 0 0 34px;">Depuis mars 2021</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 32px;">
+          <div>
+            <div style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(42px, 4.6vw, 58px); line-height: 1.06; color: #FDB913;">4</div>
+            <p style="font-size: 15px; line-height: 1.5; color: #D6E8F6; margin: 12px 0 0;">années d'accompagnement continu dans le Gard</p>
+          </div>
+          <div>
+            <div style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(42px, 4.6vw, 58px); line-height: 1.06; color: #FDB913;">34</div>
+            <p style="font-size: 15px; line-height: 1.5; color: #D6E8F6; margin: 12px 0 0;">enfants confiés par l'ASE accompagnés avec hébergement en 2024</p>
+          </div>
+          <div>
+            <div style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(42px, 4.6vw, 58px); line-height: 1.06; color: #FDB913;">41</div>
+            <p style="font-size: 15px; line-height: 1.5; color: #D6E8F6; margin: 12px 0 0;">enfants accueillis en séjours et journées d'activités dès la première année</p>
+          </div>
+          <div>
+            <div style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(42px, 4.6vw, 58px); line-height: 1.06; color: #FDB913;">10</div>
+            <p style="font-size: 15px; line-height: 1.5; color: #D6E8F6; margin: 12px 0 0;">partenaires fidèles : clubs, établissements scolaires, mairies, associations</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ showQuote }}" hint-placeholder-val="{{ true }}">
+    <section style="max-width: 920px; margin: 0 auto; padding: 84px 28px; text-align: center;">
+      <p style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 500; font-size: clamp(24px, 2.9vw, 34px); line-height: 1.35; letter-spacing: -0.02em; margin: 0; text-wrap: pretty;">« Nous ne forçons pas l'inclusion, nous la construisons dans un cadre bienveillant et sécurisé. »</p>
+      <p style="font-size: 14px; font-weight: 600; color: #6B8496; margin: 26px 0 0;">Morgane Blanc &amp; Mickaël Chaggar, fondateurs</p>
+    </section>
+    </sc-if>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 0 28px 96px;">
+      <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.07); border-radius: 32px; padding: 44px 48px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
+        <div style="flex: 1 1 380px;">
+          <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 30px; letter-spacing: -0.02em; margin: 0 0 10px;">Une situation à nous confier ?</h2>
+          <p style="font-size: 16px; line-height: 1.6; color: #587287; margin: 0;">Familles, ASE, MECS, ITEP, établissements scolaires : parlons de votre besoin, nous construisons une réponse sur mesure.</p>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="tel:0619355122" style="font-size: 15.5px; font-weight: 700; color: #FFFFFF; background: #1B75BB; padding: 15px 26px; border-radius: 999px;" style-hover="background: #145F98; color: #FFFFFF;">06 19 35 51 22</a>
+          <a href="mailto:asso.peps30@gmail.com" style="font-size: 15.5px; font-weight: 700; color: #123A5C; border: 1.5px solid rgba(18,58,92,0.18); padding: 15px 26px; border-radius: 999px;" style-hover="border-color: #123A5C; color: #123A5C; background: rgba(18,58,92,0.04);">Écrire un mail</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- PRESENTATION -->
+  <sc-if value="{{ isPresentation }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: pepsFade .45s ease both;">
+    <section style="max-width: 1180px; margin: 0 auto; padding: 72px 28px 48px;">
+      <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #1B75BB; margin: 0 0 18px;">Présentation</p>
+      <h1 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(33px, 4.3vw, 52px); line-height: 1.13; letter-spacing: -0.03em; margin: 0 0 26px; max-width: 900px;">Une association au service de l'humain, dédiée aux enfants et familles « extraordinaires ».</h1>
+      <p style="font-size: 19px; line-height: 1.65; color: #456277; margin: 0; max-width: 760px; text-wrap: pretty;">Jeunes en situation de handicap et en difficulté sociale. Accompagnement éducatif personnalisé, soutien aux parents, aux institutions et à l'ASE, avec l'intégration de techniques de bien-être et de développement personnel.</p>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 8px 28px 24px;">
+      <div style="border-radius: 32px; overflow: hidden; box-shadow: 0 10px 30px rgba(18,58,92,0.12); height: 460px;">
+        <image-slot id="presentation-hero" shape="rect" src="https://images.pexels.com/photos/34353414/pexels-photo-34353414.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" placeholder="Photo principale — glissez ici la photo du carrousel actuel"></image-slot>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 16px;">
+        <div style="border-radius: 24px; overflow: hidden; height: 170px; box-shadow: 0 6px 20px rgba(18,58,92,0.09);">
+          <image-slot id="presentation-photo-2" shape="rect" src="https://images.pexels.com/photos/19928160/pexels-photo-19928160.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" placeholder="Photo 2"></image-slot>
+        </div>
+        <div style="border-radius: 24px; overflow: hidden; height: 170px; box-shadow: 0 6px 20px rgba(18,58,92,0.09);">
+          <image-slot id="presentation-photo-3" shape="rect" src="https://images.pexels.com/photos/5275812/pexels-photo-5275812.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" placeholder="Photo 3"></image-slot>
+        </div>
+        <div style="border-radius: 24px; overflow: hidden; height: 170px; box-shadow: 0 6px 20px rgba(18,58,92,0.09);">
+          <image-slot id="presentation-photo-4" shape="rect" src="https://images.pexels.com/photos/3661452/pexels-photo-3661452.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" placeholder="Photo 4"></image-slot>
+        </div>
+        <div style="border-radius: 24px; overflow: hidden; height: 170px; box-shadow: 0 6px 20px rgba(18,58,92,0.09);">
+          <image-slot id="presentation-photo-5" shape="rect" src="https://images.pexels.com/photos/8544494/pexels-photo-8544494.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" placeholder="Photo 5"></image-slot>
+        </div>
+      </div>
+      <p style="font-size: 13.5px; color: #6B8496; margin: 14px 0 0;">Photos libres de droits (Pexels) en attendant les vôtres — glissez vos images dessus pour les remplacer.</p>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 24px 28px 72px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 18px;">
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 32px 28px;">
+          <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 22px; margin: 0 0 12px; color: #1B75BB;">Notre but</h3>
+          <p style="font-size: 15.5px; line-height: 1.62; color: #456277; margin: 0;">Accompagner, soutenir et travailler en lien avec les enfants et les parents en difficulté sociale, familiale ou en situation de handicap.</p>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 32px 28px;">
+          <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 22px; margin: 0 0 12px; color: #39A935;">Mais aussi</h3>
+          <p style="font-size: 15.5px; line-height: 1.62; color: #456277; margin: 0;">De la prévention dans les établissements scolaires, MECS, ITEP et autres collectivités accueillant des jeunes : tables rondes, ateliers et interventions.</p>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 32px 28px;">
+          <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 22px; margin: 0 0 12px; color: #E62129;">Nous aidons sur</h3>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <span style="font-size: 13.5px; font-weight: 600; color: #456277; background: rgba(18,58,92,0.05); padding: 7px 13px; border-radius: 999px;">Addictions</span>
+            <span style="font-size: 13.5px; font-weight: 600; color: #456277; background: rgba(18,58,92,0.05); padding: 7px 13px; border-radius: 999px;">Sexualité</span>
+            <span style="font-size: 13.5px; font-weight: 600; color: #456277; background: rgba(18,58,92,0.05); padding: 7px 13px; border-radius: 999px;">Mal-être</span>
+            <span style="font-size: 13.5px; font-weight: 600; color: #456277; background: rgba(18,58,92,0.05); padding: 7px 13px; border-radius: 999px;">Dépression</span>
+            <span style="font-size: 13.5px; font-weight: 600; color: #456277; background: rgba(18,58,92,0.05); padding: 7px 13px; border-radius: 999px;">Décrochage scolaire</span>
+            <span style="font-size: 13.5px; font-weight: 600; color: #456277; background: rgba(18,58,92,0.05); padding: 7px 13px; border-radius: 999px;">Radicalisation</span>
+            <span style="font-size: 13.5px; font-weight: 600; color: #456277; background: rgba(18,58,92,0.05); padding: 7px 13px; border-radius: 999px;">Écrans</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: radial-gradient(rgba(27,117,187,0.16) 1.6px, transparent 1.7px) 0 0 / 24px 24px, #E7F2FA;">
+      <div style="max-width: 1180px; margin: 0 auto; padding: 76px 28px;">
+        <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(28px, 3.3vw, 40px); letter-spacing: -0.025em; margin: 0 0 40px;">Qui sommes-nous ?</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px;">
+          <div style="background: #FFFFFF; border-radius: 30px; padding: 36px 34px; box-shadow: 0 8px 26px rgba(18,58,92,0.08); display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; align-items: baseline; gap: 12px;">
+              <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 27px; letter-spacing: -0.02em; margin: 0;">Mickaël Chaggar</h3>
+              <span style="font-size: 13px; font-weight: 700; color: #1B75BB;">Co-fondateur</span>
+            </div>
+            <p style="font-size: 16px; line-height: 1.65; color: #456277; margin: 0;">Éducateur travaillant en libéral et en foyer d'urgence. Formé à la parentalité, à la prévention et au coaching en développement personnel.</p>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 30px; padding: 36px 34px; box-shadow: 0 8px 26px rgba(18,58,92,0.08); display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; align-items: baseline; gap: 12px;">
+              <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 27px; letter-spacing: -0.02em; margin: 0;">Morgane Blanc</h3>
+              <span style="font-size: 13px; font-weight: 700; color: #E62129;">Co-fondatrice</span>
+            </div>
+            <p style="font-size: 16px; line-height: 1.65; color: #456277; margin: 0;">Monitrice éducatrice et sophrologue en libéral. Elle a rejoint Mickaël après avoir travaillé avec lui autour d'un jeune. Axée sur le bien-être, elle propose des suivis en sophrologie et hypnose, en individuel comme en collectivité dans les établissements scolaires.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- HISTORIQUE -->
+  <sc-if value="{{ isHistorique }}" hint-placeholder-val="{{ true }}" style="display: none">
+  <main style="animation: pepsFade .45s ease both;">
+    <section style="max-width: 1180px; margin: 0 auto; padding: 72px 28px 40px;">
+      <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #1B75BB; margin: 0 0 18px;">Historique</p>
+      <h1 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(33px, 4.3vw, 52px); line-height: 1.13; letter-spacing: -0.03em; margin: 0 0 30px; max-width: 820px;">La genèse de l'association</h1>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 44px; max-width: 1000px;">
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <p style="font-size: 17px; line-height: 1.7; color: #456277; margin: 0; text-wrap: pretty;">PEPS est une association créée par Morgane Blanc et Mickaël Chaggar en <strong>mars 2021</strong>. Le projet était de proposer une alternative aux structures, en accueillant sur des temps de week-end ou de vacances les enfants qui mettent à mal le collectif et/ou l'équipe.</p>
+          <p style="font-size: 17px; line-height: 1.7; color: #456277; margin: 0; text-wrap: pretty;">Mais aussi de proposer aux parents en difficulté avec leurs enfants une aide éducative, et des temps de répit pour les familles en accueillant leurs enfants en situation de handicap.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <p style="font-size: 17px; line-height: 1.7; color: #456277; margin: 0; text-wrap: pretty;">L'objectif : offrir un espace de vie sur un temps prédéfini et dans un lieu adapté au projet de l'enfant, permettant aux personnes accueillies de s'épanouir socialement sur des temps individuels.</p>
+          <p style="font-size: 17px; line-height: 1.7; color: #456277; margin: 0; text-wrap: pretty;">L'association promeut l'accompagnement et l'accueil temporaire ou d'urgence de personnes rencontrant des difficultés sociales et/ou affectives. Sa mission : favoriser les liens entre les personnes quels que soient leur âge, leurs différences ou leur situation sociale, et mener toute action favorisant leur développement moral, intellectuel, affectif et physique.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 40px 28px 24px;">
+      <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.02em; margin: 0 0 22px;">Trois leviers d'action initiés dès la création</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 18px;">
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 30px 26px;">
+          <div style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 15px; color: #1B75BB; margin-bottom: 14px;">01</div>
+          <p style="font-size: 15.5px; line-height: 1.62; color: #456277; margin: 0;">Un travail éducatif à domicile pour travailler la relation parents / enfants, auprès des familles en demande d'aide, afin d'éviter un placement.</p>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 30px 26px;">
+          <div style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 15px; color: #FDB913; margin-bottom: 14px;">02</div>
+          <p style="font-size: 15.5px; line-height: 1.62; color: #456277; margin: 0;">Des partenariats avec des lieux d'hébergement pour accueillir des enfants sur des temps de répit — pour l'enfant et/ou sa famille, en individuel ou en collectif, avec ou sans handicap.</p>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 30px 26px;">
+          <div style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 15px; color: #39A935; margin-bottom: 14px;">03</div>
+          <p style="font-size: 15.5px; line-height: 1.62; color: #456277; margin: 0;">Pour l'Aide Sociale à l'Enfance : accueillir des enfants et travailler individuellement une problématique précise, sur des temps de journée ou d'hébergement, en les sortant du collectif.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 64px 28px 96px;">
+      <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(28px, 3.3vw, 40px); letter-spacing: -0.025em; margin: 0 0 8px;">Quatre années d'accompagnement</h2>
+      <p style="font-size: 16px; color: #6B8496; margin: 0 0 46px;">Bilan des personnes accompagnées, année par année.</p>
+
+      <div style="display: flex; flex-direction: column; gap: 0;">
+        <sc-for list="{{ years }}" as="y" hint-placeholder-count="4">
+          <div style="display: grid; grid-template-columns: clamp(120px, 16vw, 190px) minmax(0, 1fr); gap: 28px 30px; padding-bottom: 52px; position: relative;">
+            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: rgba(18,58,92,0.12);"></div>
+            <div style="padding-left: 26px; position: relative;">
+              <span style="position: absolute; left: -6.5px; top: 12px; width: 14px; height: 14px; border-radius: 50%; background: #FFFFFF; border: 3.5px solid #1B75BB;"></span>
+              <div style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(34px, 3.6vw, 46px); line-height: 1.08; letter-spacing: -0.02em;">{{ y.year }}</div>
+              <div style="font-size: 14px; font-weight: 700; color: #1B75BB; margin-top: 10px;">{{ y.headline }}</div>
+            </div>
+            <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 28px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 30px 32px;">
+              <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px;">
+                <sc-for list="{{ y.items }}" as="it" hint-placeholder-count="5">
+                  <li style="display: flex; gap: 14px; align-items: flex-start;">
+                    <span style="flex-shrink: 0; margin-top: 7px; width: 7px; height: 7px; border-radius: 50%; background: #FDB913;"></span>
+                    <span style="font-size: 16px; line-height: 1.6; color: #456277;">{{ it }}</span>
+                  </li>
+                </sc-for>
+              </ul>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- SEJOURS -->
+  <sc-if value="{{ isSejours }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: pepsFade .45s ease both;">
+    <section style="max-width: 1180px; margin: 0 auto; padding: 72px 28px 56px;">
+      <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #6B8496; margin: 0 0 20px;">Séjours déclarés auprès de Jeunesse et Sports</p>
+      <h1 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(34px, 4.4vw, 54px); line-height: 1.12; letter-spacing: -0.03em; margin: 0 0 24px; max-width: 900px;">Les séjours PEP'S Animation : inclusion, diversité et petits groupes.</h1>
+      <p style="font-size: 19px; line-height: 1.65; color: #456277; margin: 0; max-width: 780px; text-wrap: pretty;">Des séjours éducatifs et inclusifs pour des enfants et adolescents de <strong>9 à 17 ans</strong>, en petits groupes de <strong>7 à 11 jeunes</strong>.</p>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 0 28px 72px;">
+      <div style="max-width: 760px;">
+        <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -0.02em; margin: 0 0 16px;">Des jeunes aux parcours variés</h2>
+        <p style="font-size: 17px; line-height: 1.7; color: #456277; margin: 0 0 16px;">Nos séjours accueillent des jeunes qui présentent des difficultés sociales, familiales ou scolaires, des jeunes vivant avec un trouble du neurodéveloppement (TSA, TDAH…), et des jeunes issus de milieux dits ordinaires.</p>
+        <p style="font-size: 17px; line-height: 1.7; color: #456277; margin: 0;">Notre ambition est de favoriser une mixité riche et porteuse, en créant des temps de rencontre, de coopération et d'ouverture, tout en respectant le rythme et les besoins de chacun.</p>
+      </div>
+      
+
+    </section>
+
+    <section style="background: radial-gradient(rgba(27,117,187,0.16) 1.6px, transparent 1.7px) 0 0 / 24px 24px, #E7F2FA;">
+      <div style="max-width: 1180px; margin: 0 auto; padding: 76px 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px;">
+        <div>
+          <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(26px, 2.9vw, 34px); letter-spacing: -0.025em; margin: 0 0 18px;">Une inclusion réelle et progressive</h2>
+          <p style="font-size: 16.5px; line-height: 1.7; color: #456277; margin: 0 0 16px;">Nous ne forçons pas l'inclusion, nous la construisons dans un cadre bienveillant et sécurisé, avec une équipe d'animateurs spécialisés et d'éducateurs issus du secteur social et médico-social.</p>
+          <p style="font-size: 16.5px; line-height: 1.7; color: #456277; margin: 0 0 26px;">Cette équipe pluridisciplinaire permet d'accompagner les jeunes en difficulté tout en assurant une cohésion de groupe bénéfique à tous.</p>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; gap: 12px; align-items: center; background: #FFFFFF; border-radius: 20px; padding: 15px 20px; box-shadow: 0 4px 14px rgba(18,58,92,0.06);">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #1B75BB; flex-shrink: 0;"></span>
+              <span style="font-size: 15.5px; font-weight: 600; color: #123A5C;">Une individualisation de l'accompagnement</span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center; background: #FFFFFF; border-radius: 20px; padding: 15px 20px; box-shadow: 0 4px 14px rgba(18,58,92,0.06);">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #FDB913; flex-shrink: 0;"></span>
+              <span style="font-size: 15.5px; font-weight: 600; color: #123A5C;">Un rythme adapté à chaque jeune</span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center; background: #FFFFFF; border-radius: 20px; padding: 15px 20px; box-shadow: 0 4px 14px rgba(18,58,92,0.06);">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #39A935; flex-shrink: 0;"></span>
+              <span style="font-size: 15.5px; font-weight: 600; color: #123A5C;">Une attention portée à la qualité du lien</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(26px, 2.9vw, 34px); letter-spacing: -0.025em; margin: 0 0 18px;">À visée éducative et sociale</h2>
+          <p style="font-size: 16.5px; line-height: 1.7; color: #456277; margin: 0 0 22px;">Chaque séjour est pensé comme un espace d'apprentissage et de découverte :</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px;">
+            <span style="font-size: 14.5px; font-weight: 600; color: #123A5C; background: #FFFFFF; padding: 10px 16px; border-radius: 999px; box-shadow: 0 3px 10px rgba(18,58,92,0.07);">Apprendre à vivre ensemble</span>
+            <span style="font-size: 14.5px; font-weight: 600; color: #123A5C; background: #FFFFFF; padding: 10px 16px; border-radius: 999px; box-shadow: 0 3px 10px rgba(18,58,92,0.07);">Dépasser ses peurs</span>
+            <span style="font-size: 14.5px; font-weight: 600; color: #123A5C; background: #FFFFFF; padding: 10px 16px; border-radius: 999px; box-shadow: 0 3px 10px rgba(18,58,92,0.07);">Gagner en autonomie</span>
+            <span style="font-size: 14.5px; font-weight: 600; color: #123A5C; background: #FFFFFF; padding: 10px 16px; border-radius: 999px; box-shadow: 0 3px 10px rgba(18,58,92,0.07);">Découvrir de nouveaux environnements</span>
+            <span style="font-size: 14.5px; font-weight: 600; color: #123A5C; background: #FFFFFF; padding: 10px 16px; border-radius: 999px; box-shadow: 0 3px 10px rgba(18,58,92,0.07);">Développer des compétences sociales et émotionnelles</span>
+          </div>
+          <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 20px; margin: 0 0 14px;">Nos séjours peuvent servir de</h3>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px;">
+            <li style="font-size: 16px; line-height: 1.6; color: #456277; display: flex; gap: 12px;"><span style="color: #E62129; font-weight: 800;">—</span> Temps de répit ou de rupture</li>
+            <li style="font-size: 16px; line-height: 1.6; color: #456277; display: flex; gap: 12px;"><span style="color: #E62129; font-weight: 800;">—</span> Espace d'expérimentation sociale</li>
+            <li style="font-size: 16px; line-height: 1.6; color: #456277; display: flex; gap: 12px;"><span style="color: #E62129; font-weight: 800;">—</span> Outil d'inclusion inversée : des jeunes ordinaires côtoyant des jeunes avec des besoins spécifiques</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 76px 28px 40px;">
+      <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(26px, 2.9vw, 34px); letter-spacing: -0.025em; margin: 0 0 16px;">En lien avec la nature et le territoire</h2>
+      <p style="font-size: 16.5px; line-height: 1.7; color: #456277; margin: 0 0 34px; max-width: 760px;">Des séjours à la campagne, à la montagne ou au bord de mer, avec des activités adaptées : vie collective, jeux coopératifs, activités de pleine nature, découverte du territoire, cuisine, activités créatives, temps de parole et d'expression.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <figure style="margin: 0;">
+          <div style="border-radius: 28px; overflow: hidden; height: 340px; box-shadow: 0 6px 22px rgba(18,58,92,0.09);">
+            <image-slot id="affiche-juillet" shape="rect" src="https://images.pexels.com/photos/34239119/pexels-photo-34239119.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" placeholder="Affiche du séjour de juillet"></image-slot>
+          </div>
+          <figcaption style="font-size: 14.5px; font-weight: 600; color: #456277; margin-top: 12px;">Séjour de juillet — pleine nature</figcaption>
+        </figure>
+        <figure style="margin: 0;">
+          <div style="border-radius: 28px; overflow: hidden; height: 340px; box-shadow: 0 6px 22px rgba(18,58,92,0.09);">
+            <image-slot id="affiche-aout" shape="rect" src="https://images.pexels.com/photos/10044349/pexels-photo-10044349.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" placeholder="Affiche du séjour d'août"></image-slot>
+          </div>
+          <figcaption style="font-size: 14.5px; font-weight: 600; color: #456277; margin-top: 12px;">Séjour d'août — vie collective</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 40px 28px 96px;">
+      <div style="background: radial-gradient(rgba(255,255,255,0.1) 1.6px, transparent 1.7px) 0 0 / 24px 24px, #1B75BB; color: #FFFFFF; border-radius: 32px; padding: 48px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;">
+        <p style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 500; font-size: clamp(21px, 2.2vw, 26px); line-height: 1.4; margin: 0; max-width: 640px; text-wrap: pretty;">Une vision engagée de l'éducation : permettre à chaque jeune, quel que soit son parcours, de vivre une expérience positive et valorisante.</p>
+        <button onClick="{{ goContact }}" style="font-family: Nunito, sans-serif; font-size: 15.5px; font-weight: 700; color: #123A5C; background: #FDB913; border: 0; padding: 16px 28px; border-radius: 999px; cursor: pointer;" style-hover="background: #FFFFFF;">Inscrire un jeune</button>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- PARTENAIRES -->
+  <sc-if value="{{ isPartenaires }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: pepsFade .45s ease both;">
+    <section style="max-width: 1180px; margin: 0 auto; padding: 72px 28px 44px;">
+      <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #1B75BB; margin: 0 0 18px;">Nos partenaires</p>
+      <h1 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(33px, 4.3vw, 52px); line-height: 1.13; letter-spacing: -0.03em; margin: 0 0 24px; max-width: 860px;">Les enfants au cœur de leur projet — grâce à eux.</h1>
+      <p style="font-size: 19px; line-height: 1.65; color: #456277; margin: 0; max-width: 720px; text-wrap: pretty;">Afin de permettre aux enfants que nous suivons en accompagnement éducatif de créer et d'être au cœur de leur projet, nous sommes épaulés par nos fidèles partenaires. Merci à vous !</p>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 24px 28px 96px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 16px;">
+        <sc-for list="{{ partners }}" as="p" hint-placeholder-count="10">
+          <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 26px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 26px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 128px;" style-hover="border-color: rgba(27,117,187,0.35);">
+            <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #93A9BB;">{{ p.kind }}</span>
+            <span style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; letter-spacing: -0.01em;">{{ p.name }}</span>
+            <span style="font-size: 14px; color: #6B8496; margin-top: auto;">{{ p.city }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ACTUALITES -->
+  <sc-if value="{{ isNews }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: pepsFade .45s ease both;">
+    <section style="max-width: 1180px; margin: 0 auto; padding: 72px 28px 40px;">
+      <span style="display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #1B75BB; background: rgba(27,117,187,0.1); padding: 7px 14px; border-radius: 999px;">Actualités</span>
+      <h1 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 46px; line-height: 1.1; letter-spacing: -0.03em; color: #123A5C; margin: 20px 0 16px;">La vie de l'association</h1>
+      <p style="font-size: 18px; line-height: 1.7; color: #456277; max-width: 700px; margin: 0;">Séjours, rencontres, partenariats et temps forts : retrouvez ici les dernières nouvelles de PEPS 30.</p>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 0 28px 96px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 26px;">
+      <sc-for list="{{ news }}" as="item" hint-placeholder-count="3">
+        <article onClick="{{ item.onOpen }}" style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.09); border-radius: 26px; overflow: hidden; box-shadow: 0 8px 26px rgba(18,58,92,0.07); display: flex; flex-direction: column; cursor: pointer; transition: box-shadow .2s ease, border-color .2s ease;" style-hover="border-color: rgba(27,117,187,0.38); box-shadow: 0 14px 34px rgba(18,58,92,0.13);">
+          <sc-if value="{{ item.image }}" hint-placeholder-val="{{ false }}">
+            <div style="height: 200px; background: #DCEAF5;">
+              <image-slot shape="rect" src="{{ item.image }}" placeholder="Photo de l'actualité"></image-slot>
+            </div>
+          </sc-if>
+          <div style="padding: 26px 26px 28px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span style="font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #123A5C; background: #FDB913; padding: 5px 11px; border-radius: 999px;">{{ item.categorie }}</span>
+              <span style="font-size: 13.5px; font-weight: 600; color: #7C93A5;">{{ item.dateLisible }}</span>
+            </div>
+            <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25; letter-spacing: -0.02em; color: #123A5C; margin: 0;">{{ item.titre }}</h2>
+            <p style="font-size: 15.5px; line-height: 1.7; color: #456277; margin: 0; flex: 1;">{{ item.resume }}</p>
+            <span style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 700; color: #1B75BB;">Lire la suite →</span>
+          </div>
+        </article>
+      </sc-for>
+    </section>
+
+    <sc-if value="{{ hasOpenNews }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeNews }}" style="position: fixed; inset: 0; z-index: 80; background: rgba(10,32,52,0.58); display: flex; align-items: flex-start; justify-content: center; padding: 5vh 20px; overflow-y: auto; animation: pepsFade .25s ease both;">
+      <div onClick="{{ keepOpen }}" style="background: #FFFFFF; border-radius: 30px; width: 100%; max-width: 720px; overflow: hidden; box-shadow: 0 24px 70px rgba(10,32,52,0.4);">
+        <sc-if value="{{ openNews.image }}" hint-placeholder-val="{{ false }}">
+          <div style="height: 300px; background: #DCEAF5;">
+            <image-slot shape="rect" src="{{ openNews.image }}" placeholder="Photo de l'actualité"></image-slot>
+          </div>
+        </sc-if>
+        <div style="padding: 32px 36px 36px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span style="font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #123A5C; background: #FDB913; padding: 5px 11px; border-radius: 999px;">{{ openNews.categorie }}</span>
+            <span style="font-size: 13.5px; font-weight: 600; color: #7C93A5;">{{ openNews.dateLisible }}</span>
+          </div>
+          <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(26px, 3.4vw, 34px); line-height: 1.18; letter-spacing: -0.025em; color: #123A5C; margin: 0;">{{ openNews.titre }}</h2>
+          <sc-for list="{{ openNewsParagraphes }}" as="par" hint-placeholder-count="3">
+            <p style="font-size: 16.5px; line-height: 1.75; color: #456277; margin: 0; text-wrap: pretty;">{{ par }}</p>
+          </sc-for>
+          <sc-if value="{{ openNews.lien }}" hint-placeholder-val="{{ false }}">
+            <a href="{{ openNews.lien }}" target="_blank" rel="noopener" style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 700; color: #1B75BB; text-decoration: none;" style-hover="color: #145F98; text-decoration: underline;">En savoir plus →</a>
+          </sc-if>
+          <button onClick="{{ closeNews }}" style="align-self: flex-start; margin-top: 8px; font-family: Nunito, sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; background: #123A5C; border: 0; padding: 13px 26px; border-radius: 999px; cursor: pointer;" style-hover="background: #1B75BB;">Fermer</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+  </main>
+  </sc-if>
+
+  <!-- CONTACT -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: pepsFade .45s ease both;">
+    <section style="max-width: 1180px; margin: 0 auto; padding: 72px 28px 96px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px; align-items: start;">
+      <div>
+        <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #1B75BB; margin: 0 0 18px;">Contact</p>
+        <h1 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(32px, 4.2vw, 50px); line-height: 1.12; letter-spacing: -0.03em; margin: 0 0 30px;">Parlons de votre situation.</h1>
+        <div style="display: flex; flex-direction: column; gap: 2px; margin-bottom: 34px;">
+          <a href="tel:0619355122" style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(27px, 3vw, 34px); letter-spacing: -0.02em; color: #123A5C;" style-hover="color: #1B75BB;">06 19 35 51 22</a>
+          <a href="mailto:asso.peps30@gmail.com" style="font-size: 19px; font-weight: 600; color: #1B75BB;" style-hover="color: #E62129;">asso.peps30@gmail.com</a>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 20px; max-width: 520px;">
+          <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 24px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 22px 24px;">
+            <span style="display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #93A9BB; margin-bottom: 10px;">Adresse</span>
+            <p style="font-size: 16px; line-height: 1.55; color: #123A5C; margin: 0; font-weight: 600;">43B Boulevard Gambetta<br>30100 Alès</p>
+          </div>
+          <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 24px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 22px 24px;">
+            <span style="display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #93A9BB; margin-bottom: 10px;">Références</span>
+            <p style="font-size: 15px; line-height: 1.6; color: #456277; margin: 0;">Siret 902763853<br>Agrément Jeunesse et Sports n° 030ORG0528</p>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 26px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 24px 28px; display: flex; align-items: center; gap: 20px;">
+          <div style="flex-shrink: 0; width: 76px; height: 76px; border-radius: 50%; background: #EAF2F9; display: flex; align-items: center; justify-content: center; font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 13px; color: #1B75BB; text-align: center; line-height: 1.15;">J &amp; S</div>
+          <p style="font-size: 14.5px; line-height: 1.6; color: #456277; margin: 0;">Organisme déclaré auprès du Ministère de l'Éducation nationale, de la Jeunesse et des Sports — n° 030ORG0528.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <footer style="background: radial-gradient(rgba(255,255,255,0.08) 1.6px, transparent 1.7px) 0 0 / 26px 26px, #0F3352; color: #D6E8F6;">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 56px 28px 34px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 40px;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <img src="assets/logo-peps-officiel.png" alt="Logo PEPS 30" style="width: 58px; height: 58px; object-fit: contain; background: #FFFFFF; border-radius: 16px; padding: 4px;">
+          <span style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 18px; color: #FFFFFF;">Association PEPS 30</span>
+        </div>
+        <p style="font-size: 15px; line-height: 1.6; margin: 0; max-width: 320px;">Soufflez, on vous accompagne. Prévention, éducation, parentalité et sophrologie à Alès et dans le Gard.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #9EC2E0; margin-bottom: 6px;">Navigation</span>
+        <button onClick="{{ goPresentation }}" style="font-family: Nunito, sans-serif; text-align: left; font-size: 15px; color: #D6E8F6; background: none; border: 0; padding: 0; cursor: pointer;" style-hover="color: #FDB913;">Présentation</button>
+        <button onClick="{{ goHistorique }}" style="font-family: Nunito, sans-serif; text-align: left; font-size: 15px; color: #D6E8F6; background: none; border: 0; padding: 0; cursor: pointer;" style-hover="color: #FDB913;">Historique</button>
+        <button onClick="{{ goSejours }}" style="font-family: Nunito, sans-serif; text-align: left; font-size: 15px; color: #D6E8F6; background: none; border: 0; padding: 0; cursor: pointer;" style-hover="color: #FDB913;">Animations / Séjours</button>
+        <button onClick="{{ goPartenaires }}" style="font-family: Nunito, sans-serif; text-align: left; font-size: 15px; color: #D6E8F6; background: none; border: 0; padding: 0; cursor: pointer;" style-hover="color: #FDB913;">Nos partenaires</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #9EC2E0; margin-bottom: 6px;">Nous joindre</span>
+        <span style="font-size: 15px;">43B Boulevard Gambetta<br>30100 Alès</span>
+        <a href="tel:0619355122" style="font-size: 15px; color: #D6E8F6;" style-hover="color: #FDB913;">06 19 35 51 22</a>
+        <a href="mailto:asso.peps30@gmail.com" style="font-size: 15px; color: #D6E8F6;" style-hover="color: #FDB913;">asso.peps30@gmail.com</a>
+      </div>
+    </div>
+    <div style="max-width: 1180px; margin: 0 auto; padding: 22px 28px 40px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+      <span style="font-size: 13.5px; color: #9EC2E0;">© 2026 Association PEPS 30 — Siret 902763853</span>
+      <span style="font-size: 13.5px; color: #9EC2E0;">Agrément Jeunesse et Sports n° 030ORG0528</span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showStats&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;},&quot;showQuote&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;}}">
+class Component extends DCLogic {
+  state = { page: 'accueil', news: [], openNews: -1 };
+
+  fallbackNews = [
+    { date: '2026-07-02', categorie: 'Séjours', titre: "Séjour d'été 2026 : les inscriptions sont ouvertes", texte: "Deux séjours en pleine nature dans les Cévennes, en juillet et en août. Places limitées, priorité aux familles accompagnées par l'association.", image: '', lien: '' },
+    { date: '2026-05-18', categorie: 'Association', titre: 'Assemblée générale annuelle', texte: "Retour sur le bilan 2025, présentation des comptes et des orientations pour l'année à venir. Ouverte à tous les adhérents.", image: '', lien: '' },
+    { date: '2026-03-10', categorie: 'Partenariats', titre: 'Nouvelle convention avec une MECS du Gard', texte: "Un partenariat qui renforce l'accompagnement des jeunes sur le territoire et élargit notre capacité d'accueil sur les temps de vacances.", image: '', lien: '' },
+  ];
+
+  componentDidMount() {
+    fetch('news.json?t=' + Date.now(), { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => { if (Array.isArray(d) && d.length) this.setState({ news: d }); else this.setState({ news: this.fallbackNews }); })
+      .catch(() => this.setState({ news: this.fallbackNews }));
+  }
+
+  formatNews(list) {
+    const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    return list
+      .slice()
+      .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+      .map((it) => {
+        const p = String(it.date || '').split('-');
+        const lisible = p.length === 3 ? `${Number(p[2])} ${mois[Number(p[1]) - 1]} ${p[0]}` : (it.date || '');
+        const resume = String(it.texte || '');
+        const complet = String(it.contenu || '').trim() || resume;
+        return Object.assign({}, it, {
+          dateLisible: lisible,
+          categorie: it.categorie || 'Actualité',
+          resume: this.court(resume),
+          paragraphes: complet.split(/\n+/).map((s) => s.trim()).filter(Boolean),
+        });
+      });
+  }
+
+  court(texte) {
+    const t = String(texte || '').trim();
+    if (t.length <= 170) return t;
+    return t.slice(0, 170).replace(/\s+\S*$/, '') + '…';
+  }
+
+  go(page) {
+    this.setState({ page, openNews: -1 });
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  renderVals() {
+    const p = this.state.page;
+    const actus = this.formatNews(this.state.news.length ? this.state.news : this.fallbackNews);
+    const ouverte = this.state.openNews >= 0 && this.state.openNews < actus.length ? actus[this.state.openNews] : null;
+    return {
+      isAccueil: p === 'accueil',
+      isPresentation: p === 'presentation',
+      isHistorique: p === 'historique',
+      isSejours: p === 'sejours',
+      isPartenaires: p === 'partenaires',
+      isContact: p === 'contact',
+      isNews: p === 'news',
+      goNews: () => this.go('news'),
+      news: actus.map((it, i) => Object.assign({}, it, { onOpen: () => this.setState({ openNews: i }) })),
+      hasOpenNews: !!ouverte,
+      openNews: ouverte || { titre: '', categorie: '', dateLisible: '', image: '', lien: '' },
+      openNewsParagraphes: ouverte ? ouverte.paragraphes : [],
+      closeNews: () => this.setState({ openNews: -1 }),
+      keepOpen: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
+      goAccueil: () => this.go('accueil'),
+      goPresentation: () => this.go('presentation'),
+      goHistorique: () => this.go('historique'),
+      goSejours: () => this.go('sejours'),
+      goPartenaires: () => this.go('partenaires'),
+      goContact: () => this.go('contact'),
+      showStats: this.props.showStats ?? true,
+      showQuote: this.props.showQuote ?? true,
+      partners: [
+        { name: 'Association Artes — IME', city: 'St Privat des Vieux', kind: 'Médico-social' },
+        { name: 'Collège Diderot', city: 'Alès', kind: 'Établissement scolaire' },
+        { name: 'Lycée Pasteur', city: 'La Grand-Combe', kind: 'Établissement scolaire' },
+        { name: 'Maison de la Jeunesse', city: 'Alès', kind: 'Jeunesse' },
+        { name: 'Association Les Bancs Publics', city: 'Boisset-Gaujac', kind: 'Association' },
+        { name: 'Mairie de St Jean du Pin', city: 'Saint-Jean-du-Pin', kind: 'Collectivité' },
+        { name: 'Rugby Club Cévenol', city: 'Alès', kind: 'Sport' },
+        { name: 'Club de Foot', city: 'Rousson', kind: 'Sport' },
+        { name: 'Karaté Club', city: 'Alès', kind: 'Sport' },
+        { name: 'La Grange de Nathalie', city: 'Alès', kind: 'Lieu partenaire' }
+      ],
+      years: [
+        {
+          year: '2021',
+          headline: 'La première année',
+          items: [
+            '8 familles (12 enfants) en accompagnement éducatif et soutien à la parentalité.',
+            '1 famille (3 enfants) en accompagnement scolaire et soutien à la parentalité.',
+            '6 enfants placés en famille d\u2019accueil, accueillis en séjours vacances pendant les congés de ces dernières.',
+            '3 enfants placés en MECS, accueillis en séjours vacances ou week-ends pour des temps de répit.',
+            '41 enfants en séjours vacances ou journées d\u2019activités.',
+            'Actions de prévention écrans et harcèlement scolaire dans deux écoles primaires.'
+          ]
+        },
+        {
+          year: '2022',
+          headline: 'Le travail avec l\u2019ASE s\u2019installe',
+          items: [
+            '2 familles (2 enfants avec troubles du spectre autistique) pour des week-ends répit.',
+            '2 enfants confiés à l\u2019ASE en accompagnement éducatif avec hébergement séquentiel (1 week-end sur 2 et une semaine pendant les vacances scolaires).',
+            '2 enfants confiés par l\u2019ASE en accompagnement éducatif en journée.',
+            '1 enfant confié par l\u2019ASE et placé en hôtel, en accompagnement éducatif à la journée.',
+            '4 enfants confiés par l\u2019ASE en accompagnement éducatif avec hébergement.',
+            '3 familles (4 enfants) en accompagnement éducatif et soutien à la parentalité.'
+          ]
+        },
+        {
+          year: '2023',
+          headline: 'Une montée en charge forte',
+          items: [
+            '25 enfants confiés par l\u2019ASE en accompagnement éducatif avec hébergement.',
+            '1 enfant confié par l\u2019ASE et placé en hôtel, en accompagnement éducatif à la journée.',
+            '2 familles (2 enfants avec troubles du spectre autistique) pour des week-ends répit.',
+            '1 enfant confié par l\u2019ASE de l\u2019Hérault, placé en FAM en Lozère : animation des visites médiatisées.',
+            '1 enfant en MECS pour une semaine en séjour de répit.',
+            '3 familles (3 enfants) en accompagnement éducatif et soutien à la parentalité.'
+          ]
+        },
+        {
+          year: '2024',
+          headline: 'Notre année la plus dense',
+          items: [
+            '34 enfants confiés par l\u2019ASE en accompagnement éducatif avec hébergement.',
+            '4 familles (4 enfants avec troubles du spectre autistique) pour des week-ends répit et/ou un accompagnement à la journée.',
+            '1 enfant confié par l\u2019ASE de l\u2019Hérault, placé en FAM en Lozère : animation des visites médiatisées.',
+            '1 enfant en MECS pour une semaine en séjour de répit.',
+            '2 familles (2 enfants) en accompagnement éducatif et soutien à la parentalité.'
+          ]
+        }
+      ]
+    };
+  }
+}
+
+</script>
 </body>
 </html>
