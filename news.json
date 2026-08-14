@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-08-12",
+    "categorie": "Partenariats",
+    "titre": "test",
+    "texte": "testesteste",
+    "contenu": "affafafafaf",
+    "image": "assets/untitled-project.jpg",
+    "lien": ""
+  },
+  {
     "date": "2026-05-18",
     "categorie": "Association",
     "titre": "Assemblée générale annuelle",
