@@ -354,6 +354,27 @@ class Component extends DCLogic {
     });
   }
 
+  ghError(status, detail) {
+    const raw = String(detail || '').replace(/\s+/g, ' ').trim();
+    const repo = this.ghRepo();
+    const kind = String(this.state.gh.token || '').trim().slice(0, 4) === 'ghp_' ? 'classique' : 'fine-grained';
+    let msg;
+    if (status === 401) {
+      msg = 'GitHub ne reconnaît pas ce token : il est mal copié, expiré ou révoqué. Recréez-en un et recollez-le en entier.';
+    } else if (status === 403) {
+      msg = kind === 'classique'
+        ? 'Token classique sans droit d\'écriture : sur github.com/settings/tokens, cochez la case « repo » pour ce token (ou créez plutôt un token fine-grained).'
+        : 'Token reconnu, mais sans droit d\'écriture sur ' + repo + '. Ouvrez-le sur github.com/settings/personal-access-tokens : « Repository access » = Only select repositories → ' + repo + ', « Repository permissions → Contents » = Read and write, puis Update token en bas de page.';
+    } else if (status === 404) {
+      msg = 'Dépôt ou branche introuvable — vérifiez « ' + repo +' » et la branche « ' + (this.state.gh.branch || 'main') + ' ».';
+    } else if (status === 409 || status === 422) {
+      msg = 'Conflit de version : cliquez sur « Recharger le fichier », refaites vos modifications puis republiez.';
+    } else {
+      msg = 'GitHub a répondu ' + status + '.';
+    }
+    return new Error(raw ? msg + ' [GitHub : ' + raw.slice(0, 130) + ']' : msg);
+  }
+
   async ghPut(path, contentB64, message) {
     const branch = String(this.state.gh.branch || '').trim() || 'main';
     const url = 'https://api.github.com/repos/' + this.ghRepo() + '/contents/'
@@ -362,9 +383,7 @@ class Component extends DCLogic {
     let sha = null;
     const head = await fetch(url + '?ref=' + encodeURIComponent(branch), { headers: this.ghHeaders() });
     if (head.ok) sha = (await head.json()).sha;
-    else if (head.status === 401 || head.status === 403) throw new Error('Token refusé par GitHub — vérifiez qu\'il a la permission « Contents : Read and write » sur ce dépôt.');
-    else if (head.status === 404 && path !== 'news.json') sha = null;
-    else if (head.status !== 404) throw new Error('GitHub a répondu ' + head.status + ' en lisant ' + path + '.');
+    else if (head.status !== 404) throw this.ghError(head.status, await head.text());
 
     const body = { message, content: contentB64, branch };
     if (sha) body.sha = sha;
@@ -373,13 +392,7 @@ class Component extends DCLogic {
       headers: Object.assign({ 'Content-Type': 'application/json' }, this.ghHeaders()),
       body: JSON.stringify(body),
     });
-    if (!res.ok) {
-      if (res.status === 401 || res.status === 403) {
-        throw new Error('Le token n\'a pas le droit d\'écrire dans ' + this.ghRepo() + '. Dans ses réglages sur GitHub : « Repository access » sur « Only select repositories » → ' + this.ghRepo() + ', puis « Repository permissions → Contents : Read and write ».');
-      }
-      const detail = await res.text();
-      throw new Error('Envoi de ' + path + ' refusé (' + res.status + ') — ' + detail.slice(0, 160));
-    }
+    if (!res.ok) throw this.ghError(res.status, await res.text());
   }
 
   publish = async () => {
