@@ -1,29 +1,5 @@
 [
   {
-    "date": "2026-08-14",
-    "categorie": "Séjours",
-    "titre": "adadadad",
-    "texte": "addadadad",
-    "image": "assets/photo-2025-05-09-09-15-20-2.jpg",
-    "lien": ""
-  },
-  {
-    "date": "2026-08-13",
-    "categorie": "Séjours",
-    "titre": "dadadadada",
-    "texte": "dadad",
-    "image": "assets/photo-2025-05-09-09-15-20-2.jpg",
-    "lien": ""
-  },
-  {
-    "date": "2026-07-02",
-    "categorie": "Séjours",
-    "titre": "test",
-    "texte": "test",
-    "image": "assets/photo-2025-05-09-09-15-20-2.jpg",
-    "lien": ""
-  },
-  {
     "date": "2026-05-18",
     "categorie": "Association",
     "titre": "Assemblée générale annuelle",
