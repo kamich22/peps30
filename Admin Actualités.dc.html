@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F2F7FB; font-family: Nunito, sans-serif; color: #123A5C; }
+    a { color: var(--accent); }
+    a:hover { color: #145F98; }
+  </style>
+</helmet>
+
+<div style="{{ rootStyle }}">
+  <header style="background: #123A5C; color: #FFFFFF; padding: 26px 32px;">
+    <div style="max-width: 1120px; margin: 0 auto; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+      <img src="assets/logo-peps-officiel.png" alt="PEPS 30" style="height: 58px; width: auto; display: block;">
+      <div>
+        <h1 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -0.02em; margin: 0;">Gestion des actualités</h1>
+        <p style="font-size: 14px; color: #9EC2E0; margin: 4px 0 0;">Ajoutez, modifiez ou supprimez les actualités du site, puis exportez le fichier.</p>
+      </div>
+      <a href="Site PEPS30.dc.html" style="margin-left: auto; font-size: 14.5px; font-weight: 700; color: #FFFFFF; background: rgba(255,255,255,0.14); padding: 11px 18px; border-radius: 999px; text-decoration: none;" style-hover="background: rgba(255,255,255,0.24);">Voir le site</a>
+    </div>
+  </header>
+
+  <div style="max-width: 1120px; margin: 0 auto; padding: 34px 32px 80px; display: grid; grid-template-columns: minmax(320px, 400px) 1fr; gap: 30px; align-items: start;">
+
+    <section style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.1); border-radius: 24px; padding: 26px; box-shadow: 0 8px 26px rgba(18,58,92,0.07); position: sticky; top: 24px;">
+      <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 20px; margin: 0 0 20px;">{{ formTitle }}</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">
+          Titre
+          <input value="{{ draft.titre }}" onChange="{{ onTitre }}" placeholder="Séjour d'été 2026" style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 400; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 11px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none;" style-focus="border-color: var(--accent);">
+        </label>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">
+            Date
+            <input type="date" value="{{ draft.date }}" onChange="{{ onDate }}" style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 400; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 11px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none;" style-focus="border-color: var(--accent);">
+          </label>
+          <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">
+            Catégorie
+            <select value="{{ draft.categorie }}" onChange="{{ onCategorie }}" style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 400; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 11px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none; background: #FFFFFF;" style-focus="border-color: var(--accent);">
+              <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="4">
+                <option value="{{ cat }}">{{ cat }}</option>
+              </sc-for>
+            </select>
+          </label>
+        </div>
+
+        <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">
+          Texte
+          <textarea value="{{ draft.texte }}" onChange="{{ onTexte }}" rows="5" placeholder="Deux ou trois phrases." style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 400; line-height: 1.6; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 11px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none; resize: vertical;" style-focus="border-color: var(--accent);"></textarea>
+        </label>
+
+        <div style="display: flex; flex-direction: column; gap: 9px;">
+          <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">Image <span style="font-weight: 600; text-transform: none; letter-spacing: normal; color: #9AAEBC;">facultatif</span></span>
+          <sc-if value="{{ hasPreview }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ previewStyle }}"></div>
+          </sc-if>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <label style="flex: 1; min-width: 130px; font-family: Nunito, sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 11px 16px; border-radius: 999px; cursor: pointer; text-align: center;" style-hover="background: var(--accent-strong);">
+              Choisir une image
+              <input type="file" accept="image/*" onChange="{{ onPickImage }}" style="display: none;">
+            </label>
+            <sc-if value="{{ hasFile }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ exportImage }}" style="font-family: Nunito, sans-serif; font-size: 14px; font-weight: 700; color: #123A5C; background: #FDB913; border: 0; padding: 11px 16px; border-radius: 999px; cursor: pointer;" style-hover="background: #E8A800;">Exporter l'image</button>
+            </sc-if>
+          </div>
+          <input value="{{ draft.image }}" onChange="{{ onImage }}" placeholder="assets/ma-photo.jpg" style="font-family: Nunito, sans-serif; font-size: 14px; font-weight: 400; color: #456277; padding: 10px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none;" style-focus="border-color: var(--accent);">
+          <sc-if value="{{ hasFile }}" hint-placeholder-val="{{ false }}">
+            <p style="font-size: 12.5px; line-height: 1.55; color: #9AAEBC; margin: 0;">Exportez l'image puis déposez le fichier téléchargé dans le dossier <strong>assets/</strong> du site.</p>
+          </sc-if>
+        </div>
+
+        <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">
+          Lien <span style="font-weight: 600; text-transform: none; letter-spacing: normal; color: #9AAEBC;">facultatif</span>
+          <input value="{{ draft.lien }}" onChange="{{ onLien }}" placeholder="https://..." style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 400; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 11px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none;" style-focus="border-color: var(--accent);">
+        </label>
+
+        <div style="display: flex; gap: 10px; margin-top: 4px;">
+          <button onClick="{{ save }}" style="flex: 1; font-family: Nunito, sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; background: var(--accent); border: 0; padding: 13px 18px; border-radius: 999px; cursor: pointer;" style-hover="filter: brightness(0.86);">{{ saveLabel }}</button>
+          <sc-if value="{{ isEditing }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ cancel }}" style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 700; color: #456277; background: rgba(18,58,92,0.07); border: 0; padding: 13px 18px; border-radius: 999px; cursor: pointer;" style-hover="background: rgba(18,58,92,0.13);">Annuler</button>
+          </sc-if>
+        </div>
+        <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size: 13.5px; font-weight: 600; color: #C2453C; margin: 0;">{{ error }}</p>
+        </sc-if>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 18px;">
+      <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.1); border-radius: 20px; padding: 18px 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+        <div>
+          <p style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 17px; margin: 0;">{{ countLabel }}</p>
+          <p style="font-size: 13.5px; color: #7C93A5; margin: 3px 0 0;">Enregistré dans ce navigateur. Exportez pour mettre le site à jour.</p>
+        </div>
+        <div style="margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap;">
+          <button onClick="{{ exportJson }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 700; color: #123A5C; background: #FDB913; border: 0; padding: 12px 20px; border-radius: 999px; cursor: pointer;" style-hover="background: #E8A800;">Exporter news.json</button>
+          <button onClick="{{ reload }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 700; color: #456277; background: rgba(18,58,92,0.07); border: 0; padding: 12px 18px; border-radius: 999px; cursor: pointer;" style-hover="background: rgba(18,58,92,0.13);">Recharger le fichier</button>
+        </div>
+      </div>
+
+      <sc-if value="{{ isCards }}" hint-placeholder-val="{{ true }}">
+      <sc-for list="{{ items }}" as="item" hint-placeholder-count="3">
+        <article style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.1); border-radius: 20px; padding: 20px 22px; display: flex; gap: 18px; align-items: flex-start; box-shadow: 0 4px 16px rgba(18,58,92,0.05);">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 9px;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #123A5C; background: #FDB913; padding: 4px 10px; border-radius: 999px;">{{ item.categorie }}</span>
+              <span style="font-size: 13px; font-weight: 600; color: #7C93A5;">{{ item.dateLisible }}</span>
+            </div>
+            <h3 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 19px; line-height: 1.3; margin: 0;">{{ item.titre }}</h3>
+            <p style="font-size: 14.5px; line-height: 1.65; color: #456277; margin: 0;">{{ item.texte }}</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button onClick="{{ item.onEdit }}" style="font-family: Nunito, sans-serif; font-size: 13.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border: 0; padding: 9px 15px; border-radius: 999px; cursor: pointer;" style-hover="background: var(--accent-strong);">Modifier</button>
+            <button onClick="{{ item.onDelete }}" style="font-family: Nunito, sans-serif; font-size: 13.5px; font-weight: 700; color: #C2453C; background: rgba(194,69,60,0.1); border: 0; padding: 9px 15px; border-radius: 999px; cursor: pointer;" style-hover="background: rgba(194,69,60,0.2);">Supprimer</button>
+          </div>
+        </article>
+      </sc-for>
+      </sc-if>
+
+      <sc-if value="{{ isCompact }}" hint-placeholder-val="{{ false }}">
+      <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.1); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 16px rgba(18,58,92,0.05);">
+        <sc-for list="{{ items }}" as="item" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-bottom: 1px solid rgba(18,58,92,0.07);">
+            <span style="font-size: 12.5px; font-weight: 700; color: #7C93A5; min-width: 112px;">{{ item.dateLisible }}</span>
+            <span style="font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #123A5C; background: #FDB913; padding: 3px 9px; border-radius: 999px; white-space: nowrap;">{{ item.categorie }}</span>
+            <span style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 15.5px; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ item.titre }}</span>
+            <button onClick="{{ item.onEdit }}" style="font-family: Nunito, sans-serif; font-size: 12.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border: 0; padding: 7px 13px; border-radius: 999px; cursor: pointer;" style-hover="background: var(--accent-strong);">Modifier</button>
+            <button onClick="{{ item.onDelete }}" style="font-family: Nunito, sans-serif; font-size: 12.5px; font-weight: 700; color: #C2453C; background: rgba(194,69,60,0.1); border: 0; padding: 7px 13px; border-radius: 999px; cursor: pointer;" style-hover="background: rgba(194,69,60,0.2);">Suppr.</button>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="background: #FFFFFF; border: 1.5px dashed rgba(18,58,92,0.2); border-radius: 20px; padding: 44px 24px; text-align: center;">
+          <p style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 18px; color: #7C93A5; margin: 0;">Aucune actualité pour le moment</p>
+          <p style="font-size: 14.5px; color: #9AAEBC; margin: 8px 0 0;">Remplissez le formulaire à gauche pour en créer une.</p>
+        </div>
+      </sc-if>
+
+      <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.1); border-radius: 20px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 16px rgba(18,58,92,0.05);">
+        <div>
+          <p style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 17px; margin: 0;">Publier sur GitHub</p>
+          <p style="font-size: 13.5px; line-height: 1.6; color: #7C93A5; margin: 4px 0 0;">Envoie <strong>news.json</strong> et les images choisies directement dans le dépôt. Le site en ligne se met à jour tout seul, une à deux minutes plus tard.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px;">
+          <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">
+            Dépôt
+            <input value="{{ gh.repo }}" onChange="{{ onGhRepo }}" placeholder="kamich22/peps30" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 400; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 10px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none;" style-focus="border-color: var(--accent);">
+          </label>
+          <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">
+            Branche
+            <input value="{{ gh.branch }}" onChange="{{ onGhBranch }}" placeholder="main" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 400; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 10px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none;" style-focus="border-color: var(--accent);">
+          </label>
+        </div>
+
+        <label style="display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #7C93A5;">
+          Token d'accès
+          <input type="password" value="{{ gh.token }}" onChange="{{ onGhToken }}" placeholder="github_pat_..." style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 400; color: #123A5C; text-transform: none; letter-spacing: normal; padding: 10px 13px; border: 1.5px solid rgba(18,58,92,0.16); border-radius: 12px; outline: none;" style-focus="border-color: var(--accent);">
+        </label>
+        <p style="font-size: 12.5px; line-height: 1.6; color: #9AAEBC; margin: 0;">Le token reste dans ce navigateur et n'est envoyé qu'à GitHub. Créez-le sur github.com → Settings → Developer settings → <strong>Fine-grained tokens</strong>, en n'autorisant que le dépôt du site avec la permission <strong>Contents : Read and write</strong>.</p>
+
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <button onClick="{{ publish }}" style="font-family: Nunito, sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; background: var(--accent); border: 0; padding: 12px 22px; border-radius: 999px; cursor: pointer;" style-hover="filter: brightness(0.86);">{{ publishLabel }}</button>
+          <sc-if value="{{ pendingLabel }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size: 13.5px; font-weight: 600; color: #7C93A5;">{{ pendingLabel }}</span>
+          </sc-if>
+        </div>
+        <sc-if value="{{ publishDone }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size: 13.5px; font-weight: 600; line-height: 1.6; color: #2E8B6F; margin: 0;">{{ publishMsg }}</p>
+        </sc-if>
+        <sc-if value="{{ publishError }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size: 13.5px; font-weight: 600; line-height: 1.6; color: #C2453C; margin: 0;">{{ publishMsg }}</p>
+        </sc-if>
+      </div>
+
+      <div style="background: rgba(27,117,187,0.07); border-radius: 20px; padding: 20px 24px;">
+        <p style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 16px; margin: 0 0 8px;">Publier à la main (sans token)</p>
+        <p style="font-size: 14.5px; line-height: 1.7; color: #456277; margin: 0;">1. Cliquez sur <strong>Exporter news.json</strong>. 2. Remplacez le fichier <strong>news.json</strong> à la racine du dépôt puis envoyez-le sur GitHub. 3. Les nouvelles actualités apparaissent sur l'onglet Actualités.</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1B75BB&quot;,&quot;options&quot;:[&quot;#1B75BB&quot;,&quot;#123A5C&quot;,&quot;#2E8B6F&quot;,&quot;#C2453C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apparence&quot;},&quot;listStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Cartes détaillées&quot;,&quot;options&quot;:[&quot;Cartes détaillées&quot;,&quot;Liste compacte&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apparence&quot;},&quot;categories&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Séjours, Association, Partenariats, Animations&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contenu&quot;}}">
+const EMPTY = { titre: '', date: '', categorie: 'Séjours', texte: '', image: '', lien: '' };
+const KEY = 'peps30-news';
+const GH_KEY = 'peps30-github';
+const GH_EMPTY = { repo: '', branch: 'main', token: '' };
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+
+class Component extends DCLogic {
+  state = {
+    items: [], draft: Object.assign({}, EMPTY), editIndex: -1, error: '', file: null, previewUrl: '',
+    gh: Object.assign({}, GH_EMPTY), uploads: [], publishing: false, publishOk: false, publishMsg: '',
+  };
+
+  download(blob, name) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  onPickImage = (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const safe = f.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9.]+/g, '-').replace(/^-+|-+$/g, '');
+    if (this.state.previewUrl) URL.revokeObjectURL(this.state.previewUrl);
+    this.setState({
+      file: f,
+      previewUrl: URL.createObjectURL(f),
+      draft: Object.assign({}, this.state.draft, { image: 'assets/' + safe }),
+      error: '',
+    });
+  };
+
+  exportImage = () => {
+    if (!this.state.file) return;
+    const name = (this.state.draft.image || this.state.file.name).split('/').pop();
+    this.download(this.state.file, name);
+  };
+
+  componentDidMount() {
+    let gh = null;
+    try { gh = JSON.parse(localStorage.getItem(GH_KEY) || 'null'); } catch (e) { gh = null; }
+    if (gh && typeof gh === 'object') this.setState({ gh: Object.assign({}, GH_EMPTY, gh) });
+
+    let stored = null;
+    try { stored = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { stored = null; }
+    if (Array.isArray(stored)) { this.setState({ items: stored }); return; }
+    this.loadFile();
+  }
+
+  loadFile = () => {
+    fetch('news.json')
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => { if (Array.isArray(d)) this.setState({ items: d, error: '' }); })
+      .catch(() => this.setState({ error: "news.json introuvable — la liste démarre vide." }));
+  };
+
+  persist(items) {
+    try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {}
+  }
+
+  sorted(items) {
+    return items.slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+  }
+
+  lisible(d) {
+    const p = String(d || '').split('-');
+    return p.length === 3 ? Number(p[2]) + ' ' + MOIS[Number(p[1]) - 1] + ' ' + p[0] : (d || 'Sans date');
+  }
+
+  field(name) {
+    return (e) => this.setState({ draft: Object.assign({}, this.state.draft, { [name]: e.target.value }) });
+  }
+
+  save = () => {
+    const d = this.state.draft;
+    if (!d.titre.trim() || !d.texte.trim()) { this.setState({ error: 'Le titre et le texte sont obligatoires.' }); return; }
+    const clean = Object.assign({}, d, { titre: d.titre.trim(), texte: d.texte.trim(), date: d.date || new Date().toISOString().slice(0, 10) });
+    const items = this.sorted(this.state.items).slice();
+    if (this.state.editIndex >= 0) items[this.state.editIndex] = clean;
+    else items.unshift(clean);
+    this.persist(items);
+
+    const uploads = this.state.uploads.filter((u) => u.path !== clean.image);
+    if (this.state.file && clean.image) uploads.push({ path: clean.image, file: this.state.file });
+
+    this.setState({ items, uploads, draft: Object.assign({}, EMPTY), editIndex: -1, error: '', file: null, previewUrl: '' });
+  };
+
+  cancel = () => this.setState({ draft: Object.assign({}, EMPTY), editIndex: -1, error: '', file: null, previewUrl: '' });
+
+  remove(i) {
+    const items = this.sorted(this.state.items).slice();
+    items.splice(i, 1);
+    this.persist(items);
+    this.setState({ items, draft: Object.assign({}, EMPTY), editIndex: -1 });
+  }
+
+  edit(i) {
+    const items = this.sorted(this.state.items);
+    this.setState({ draft: Object.assign({}, EMPTY, items[i]), editIndex: i, error: '' });
+  }
+
+  newsText() {
+    const data = this.sorted(this.state.items).map((it) => ({
+      date: it.date || '', categorie: it.categorie || '', titre: it.titre || '',
+      texte: it.texte || '', image: it.image || '', lien: it.lien || '',
+    }));
+    return JSON.stringify(data, null, 2) + '\n';
+  }
+
+  exportJson = () => {
+    this.download(new Blob([this.newsText()], { type: 'application/json' }), 'news.json');
+  };
+
+  ghField(name) {
+    return (e) => {
+      const gh = Object.assign({}, this.state.gh, { [name]: e.target.value });
+      this.setState({ gh, publishMsg: '' });
+      try { localStorage.setItem(GH_KEY, JSON.stringify(gh)); } catch (err) {}
+    };
+  }
+
+  ghRepo() {
+    return String(this.state.gh.repo || '').trim()
+      .replace(/^https?:\/\/github\.com\//i, '')
+      .replace(/\.git$/i, '')
+      .replace(/^\/+|\/+$/g, '');
+  }
+
+  ghHeaders() {
+    return {
+      Authorization: 'Bearer ' + String(this.state.gh.token || '').trim(),
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+    };
+  }
+
+  textToBase64(text) {
+    const bytes = new TextEncoder().encode(text);
+    let bin = '';
+    bytes.forEach((b) => { bin += String.fromCharCode(b); });
+    return btoa(bin);
+  }
+
+  fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result).split(',')[1] || '');
+      r.onerror = () => reject(new Error('Impossible de lire le fichier ' + file.name));
+      r.readAsDataURL(file);
+    });
+  }
+
+  async ghPut(path, contentB64, message) {
+    const branch = String(this.state.gh.branch || '').trim() || 'main';
+    const url = 'https://api.github.com/repos/' + this.ghRepo() + '/contents/'
+      + path.split('/').map(encodeURIComponent).join('/');
+
+    let sha = null;
+    const head = await fetch(url + '?ref=' + encodeURIComponent(branch), { headers: this.ghHeaders() });
+    if (head.ok) sha = (await head.json()).sha;
+    else if (head.status === 401 || head.status === 403) throw new Error('Token refusé par GitHub — vérifiez qu\'il a la permission « Contents : Read and write » sur ce dépôt.');
+    else if (head.status === 404 && path !== 'news.json') sha = null;
+    else if (head.status !== 404) throw new Error('GitHub a répondu ' + head.status + ' en lisant ' + path + '.');
+
+    const body = { message, content: contentB64, branch };
+    if (sha) body.sha = sha;
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: Object.assign({ 'Content-Type': 'application/json' }, this.ghHeaders()),
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const detail = await res.text();
+      throw new Error('Envoi de ' + path + ' refusé (' + res.status + ') — ' + detail.slice(0, 160));
+    }
+  }
+
+  publish = async () => {
+    if (this.state.publishing) return;
+    if (!this.ghRepo() || !String(this.state.gh.token || '').trim()) {
+      this.setState({ publishOk: false, publishMsg: 'Renseignez le dépôt et le token avant de publier.' });
+      return;
+    }
+    this.setState({ publishing: true, publishOk: false, publishMsg: 'Publication en cours…' });
+    try {
+      for (const up of this.state.uploads) {
+        const b64 = await this.fileToBase64(up.file);
+        await this.ghPut(up.path, b64, 'Ajout de l\'image ' + up.path);
+      }
+      await this.ghPut('news.json', this.textToBase64(this.newsText()), 'Mise à jour des actualités');
+      this.setState({
+        uploads: [], publishing: false, publishOk: true,
+        publishMsg: 'Publié sur GitHub. Le site en ligne se met à jour d\'ici une à deux minutes.',
+      });
+    } catch (e) {
+      this.setState({ publishing: false, publishOk: false, publishMsg: (e && e.message) ? e.message : String(e) });
+    }
+  };
+
+  renderVals() {
+    const list = this.sorted(this.state.items);
+    const n = list.length;
+    const accent = this.props.accent || '#1B75BB';
+    const compact = (this.props.listStyle || 'Cartes détaillées') === 'Liste compacte';
+    const cats = String(this.props.categories || 'Séjours, Association, Partenariats, Animations')
+      .split(',').map((s) => s.trim()).filter(Boolean);
+    return {
+      rootStyle: {
+        minHeight: '100vh',
+        background: '#F2F7FB',
+        '--accent': accent,
+        '--accent-soft': accent + '1a',
+        '--accent-strong': accent + '33',
+      },
+      categories: cats,
+      isCompact: compact,
+      isCards: !compact,
+      items: list.map((it, i) => Object.assign({}, it, {
+        dateLisible: this.lisible(it.date),
+        categorie: it.categorie || 'Actualité',
+        onEdit: () => this.edit(i),
+        onDelete: () => this.remove(i),
+      })),
+      draft: this.state.draft,
+      hasFile: !!this.state.file,
+      hasPreview: !!(this.state.previewUrl || this.state.draft.image),
+      previewStyle: {
+        borderRadius: '14px',
+        border: '1.5px solid rgba(18,58,92,0.14)',
+        background: '#DCEAF5',
+        height: '160px',
+        backgroundImage: (this.state.previewUrl || this.state.draft.image) ? `url(${this.state.previewUrl || this.state.draft.image})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      },
+      onPickImage: this.onPickImage,
+      exportImage: this.exportImage,
+      isEditing: this.state.editIndex >= 0,
+      isEmpty: n === 0,
+      error: this.state.error,
+      formTitle: this.state.editIndex >= 0 ? "Modifier l'actualité" : 'Nouvelle actualité',
+      saveLabel: this.state.editIndex >= 0 ? 'Enregistrer' : 'Ajouter',
+      countLabel: n === 0 ? 'Aucune actualité' : n === 1 ? '1 actualité' : n + ' actualités',
+      onTitre: this.field('titre'),
+      onDate: this.field('date'),
+      onCategorie: this.field('categorie'),
+      onTexte: this.field('texte'),
+      onImage: this.field('image'),
+      onLien: this.field('lien'),
+      save: this.save,
+      cancel: this.cancel,
+      exportJson: this.exportJson,
+      reload: this.loadFile,
+      gh: this.state.gh,
+      onGhRepo: this.ghField('repo'),
+      onGhBranch: this.ghField('branch'),
+      onGhToken: this.ghField('token'),
+      publish: this.publish,
+      publishLabel: this.state.publishing ? 'Publication…' : 'Publier sur GitHub',
+      publishMsg: this.state.publishMsg,
+      publishDone: !!this.state.publishMsg && this.state.publishOk,
+      publishError: !!this.state.publishMsg && !this.state.publishOk,
+      pendingLabel: this.state.uploads.length
+        ? (this.state.uploads.length === 1 ? '1 image à envoyer' : this.state.uploads.length + ' images à envoyer')
+        : '',
+    };
+  }
+}
+
+</script>
+</body>
+</html>

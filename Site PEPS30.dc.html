@@ -62,6 +62,14 @@
           Animations / Séjours
           <sc-if value="{{ isSejours }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2.5px; border-radius: 2px; background: #1B75BB;"></span></sc-if>
         </button>
+        <button onClick="{{ goPartenaires }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 600; color: #123A5C; background: none; border: 0; padding: 9px 14px; border-radius: 10px; cursor: pointer; position: relative;" style-hover="background: rgba(27,117,187,0.08); color: #1B75BB;">
+          Partenaires
+          <sc-if value="{{ isPartenaires }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2.5px; border-radius: 2px; background: #1B75BB;"></span></sc-if>
+        </button>
+        <button onClick="{{ goNews }}" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 600; color: #123A5C; background: none; border: 0; padding: 9px 14px; border-radius: 10px; cursor: pointer; position: relative;" style-hover="background: rgba(27,117,187,0.08); color: #1B75BB;">
+          Actualités
+          <sc-if value="{{ isNews }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2.5px; border-radius: 2px; background: #1B75BB;"></span></sc-if>
+        </button>
         <button onClick="{{ goContact }}" style="margin-left: 8px; font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 700; color: #FFFFFF; background: #1B75BB; border: 0; padding: 11px 20px; border-radius: 999px; cursor: pointer;" style-hover="background: #145F98;">Contact</button>
       </nav>
     </div>
@@ -248,7 +256,6 @@
         </div>
       </div>
     </section>
-
   </main>
   </sc-if>
 
@@ -315,8 +322,6 @@
         </sc-for>
       </div>
     </section>
-
-   
   </main>
   </sc-if>
 
@@ -408,6 +413,63 @@
   </main>
   </sc-if>
 
+  <!-- PARTENAIRES -->
+  <sc-if value="{{ isPartenaires }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: pepsFade .45s ease both;">
+    <section style="max-width: 1180px; margin: 0 auto; padding: 72px 28px 44px;">
+      <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #1B75BB; margin: 0 0 18px;">Nos partenaires</p>
+      <h1 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: clamp(33px, 4.3vw, 52px); line-height: 1.13; letter-spacing: -0.03em; margin: 0 0 24px; max-width: 860px;">Les enfants au cœur de leur projet — grâce à eux.</h1>
+      <p style="font-size: 19px; line-height: 1.65; color: #456277; margin: 0; max-width: 720px; text-wrap: pretty;">Afin de permettre aux enfants que nous suivons en accompagnement éducatif de créer et d'être au cœur de leur projet, nous sommes épaulés par nos fidèles partenaires. Merci à vous !</p>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 24px 28px 96px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 16px;">
+        <sc-for list="{{ partners }}" as="p" hint-placeholder-count="10">
+          <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 26px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 26px 28px; display: flex; flex-direction: column; gap: 8px; min-height: 128px;" style-hover="border-color: rgba(27,117,187,0.35);">
+            <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #93A9BB;">{{ p.kind }}</span>
+            <span style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; letter-spacing: -0.01em;">{{ p.name }}</span>
+            <span style="font-size: 14px; color: #6B8496; margin-top: auto;">{{ p.city }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ACTUALITES -->
+  <sc-if value="{{ isNews }}" hint-placeholder-val="{{ true }}">
+  <main style="animation: pepsFade .45s ease both;">
+    <section style="max-width: 1180px; margin: 0 auto; padding: 72px 28px 40px;">
+      <span style="display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #1B75BB; background: rgba(27,117,187,0.1); padding: 7px 14px; border-radius: 999px;">Actualités</span>
+      <h1 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 46px; line-height: 1.1; letter-spacing: -0.03em; color: #123A5C; margin: 20px 0 16px;">La vie de l'association</h1>
+      <p style="font-size: 18px; line-height: 1.7; color: #456277; max-width: 700px; margin: 0;">Séjours, rencontres, partenariats et temps forts : retrouvez ici les dernières nouvelles de PEPS 30.</p>
+    </section>
+
+    <section style="max-width: 1180px; margin: 0 auto; padding: 0 28px 96px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 26px;">
+      <sc-for list="{{ news }}" as="item" hint-placeholder-count="3">
+        <article style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.09); border-radius: 26px; overflow: hidden; box-shadow: 0 8px 26px rgba(18,58,92,0.07); display: flex; flex-direction: column;">
+          <sc-if value="{{ item.image }}" hint-placeholder-val="{{ false }}">
+            <div style="height: 200px; background: #DCEAF5;">
+              <image-slot shape="rect" src="{{ item.image }}" placeholder="Photo de l'actualité"></image-slot>
+            </div>
+          </sc-if>
+          <div style="padding: 26px 26px 28px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span style="font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #123A5C; background: #FDB913; padding: 5px 11px; border-radius: 999px;">{{ item.categorie }}</span>
+              <span style="font-size: 13.5px; font-weight: 600; color: #7C93A5;">{{ item.dateLisible }}</span>
+            </div>
+            <h2 style="font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25; letter-spacing: -0.02em; color: #123A5C; margin: 0;">{{ item.titre }}</h2>
+            <p style="font-size: 15.5px; line-height: 1.7; color: #456277; margin: 0; flex: 1;">{{ item.texte }}</p>
+            <sc-if value="{{ item.lien }}" hint-placeholder-val="{{ false }}">
+              <a href="{{ item.lien }}" target="_blank" rel="noopener" style="font-family: Nunito, sans-serif; font-size: 14.5px; font-weight: 700; color: #1B75BB; text-decoration: none;" style-hover="color: #145F98; text-decoration: underline;">En savoir plus →</a>
+            </sc-if>
+          </div>
+        </article>
+      </sc-for>
+    </section>
+  </main>
+  </sc-if>
+
   <!-- CONTACT -->
   <sc-if value="{{ isContact }}" hint-placeholder-val="{{ true }}">
   <main style="animation: pepsFade .45s ease both;">
@@ -431,14 +493,10 @@
         </div>
       </div>
       <div style="display: flex; flex-direction: column; gap: 20px;">
-        <div style="border-radius: 26px; overflow: hidden; height: 340px; box-shadow: 0 8px 26px rgba(18,58,92,0.1); display: flex; align-items: center; justify-content: center; background: #FFFFFF;">
-          <img src="assets/logo-peps-officiel.png" alt="Logo PEPS 30" style="width: 200px; height: 200px; object-fit: contain;">
-        </div>
         <div style="background: #FFFFFF; border: 1px solid rgba(18,58,92,0.06); border-radius: 26px; box-shadow: 0 6px 22px rgba(18,58,92,0.07); padding: 24px 28px; display: flex; align-items: center; gap: 20px;">
           <div style="flex-shrink: 0; width: 76px; height: 76px; border-radius: 50%; background: #EAF2F9; display: flex; align-items: center; justify-content: center; font-family: 'Baloo 2', Nunito, sans-serif; font-weight: 800; font-size: 13px; color: #1B75BB; text-align: center; line-height: 1.15;">J &amp; S</div>
           <p style="font-size: 14.5px; line-height: 1.6; color: #456277; margin: 0;">Organisme déclaré auprès du Ministère de l'Éducation nationale, de la Jeunesse et des Sports — n° 030ORG0528.</p>
         </div>
-
       </div>
     </section>
   </main>
@@ -475,41 +533,58 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showVideos&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;},&quot;showStats&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;},&quot;showQuote&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showStats&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;},&quot;showQuote&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'accueil' };
+  state = { page: 'accueil', news: [] };
+
+  fallbackNews = [
+    { date: '2026-07-02', categorie: 'Séjours', titre: "Séjour d'été 2026 : les inscriptions sont ouvertes", texte: "Deux séjours en pleine nature dans les Cévennes, en juillet et en août. Places limitées, priorité aux familles accompagnées par l'association.", image: '', lien: '' },
+    { date: '2026-05-18', categorie: 'Association', titre: 'Assemblée générale annuelle', texte: "Retour sur le bilan 2025, présentation des comptes et des orientations pour l'année à venir. Ouverte à tous les adhérents.", image: '', lien: '' },
+    { date: '2026-03-10', categorie: 'Partenariats', titre: 'Nouvelle convention avec une MECS du Gard', texte: "Un partenariat qui renforce l'accompagnement des jeunes sur le territoire et élargit notre capacité d'accueil sur les temps de vacances.", image: '', lien: '' },
+  ];
+
+  componentDidMount() {
+    fetch('news.json')
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => { if (Array.isArray(d) && d.length) this.setState({ news: d }); else this.setState({ news: this.fallbackNews }); })
+      .catch(() => this.setState({ news: this.fallbackNews }));
+  }
+
+  formatNews(list) {
+    const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    return list
+      .slice()
+      .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+      .map((it) => {
+        const p = String(it.date || '').split('-');
+        const lisible = p.length === 3 ? `${Number(p[2])} ${mois[Number(p[1]) - 1]} ${p[0]}` : (it.date || '');
+        return Object.assign({}, it, { dateLisible: lisible, categorie: it.categorie || 'Actualité' });
+      });
+  }
 
   go(page) {
     this.setState({ page });
     if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
-  videoRef = (el) => {
-    if (!el) return;
-    el.muted = true;
-    el.loop = true;
-    el.playsInline = true;
-    const tryPlay = () => el.play().catch(() => {});
-    tryPlay();
-  };
-
   renderVals() {
     const p = this.state.page;
     return {
-      videoRef: this.videoRef,
       isAccueil: p === 'accueil',
       isPresentation: p === 'presentation',
       isHistorique: p === 'historique',
       isSejours: p === 'sejours',
       isPartenaires: p === 'partenaires',
       isContact: p === 'contact',
+      isNews: p === 'news',
+      goNews: () => this.go('news'),
+      news: this.formatNews(this.state.news.length ? this.state.news : this.fallbackNews),
       goAccueil: () => this.go('accueil'),
       goPresentation: () => this.go('presentation'),
       goHistorique: () => this.go('historique'),
       goSejours: () => this.go('sejours'),
       goPartenaires: () => this.go('partenaires'),
       goContact: () => this.go('contact'),
-      showVideos: this.props.showVideos ?? true,
       showStats: this.props.showStats ?? true,
       showQuote: this.props.showQuote ?? true,
       partners: [
